@@ -3,41 +3,39 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Unprovoked Jabs Wrestling Federation</title>
+    <title>UJWF | Unprovoked Jabs Wrestling Federation</title>
     <meta
       name="description"
-      content="Companion home for the Unprovoked Jabs Wrestling Federation match tracker, rankings, champions, and show brands."
+      content="Unprovoked Jabs Wrestling Federation companion site for shows, champions, contender boards, and the live UJWF SHEET."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header" aria-label="UJWF navigation">
-      <a class="brand" href="#top" aria-label="Unprovoked Jabs Wrestling Federation home">
+      <a class="brand" href="#top" aria-label="UJWF home">
         <img class="brand-logo" src="assets/logos/ujwf-federation.webp" alt="" />
-        <span class="brand-name">Unprovoked Jabs Wrestling Federation</span>
+        <span>UJWF</span>
       </a>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#shows">Shows</a>
-        <a href="#championships">Champions</a>
-        <a href="#rankings">Rankings</a>
-        <a href="#tracker">Tracker</a>
+        <a href="#boards">Boards</a>
+        <a href="#championships">Titles</a>
+        <a href="#rankings">Ranking System</a>
+        <a href="#tracker">Sheet</a>
       </nav>
     </header>
 
     <main id="top">
       <section class="hero" aria-label="UJWF home">
+        <div class="hero-bg" aria-hidden="true"></div>
         <div class="hero-content">
           <img
             class="hero-logo"
             src="assets/logos/ujwf-federation.webp"
             alt="Unprovoked Jabs Wrestling Federation logo"
           />
-          <p class="eyebrow">Match tracker companion</p>
-          <h1>Unprovoked Jabs Wrestling Federation</h1>
-          <p class="lede">
-            A quiet home base for champions, rankings, show identity, title history, and fresh
-            match entries built around the live UJWF SHEET.
-          </p>
+          <p class="eyebrow">Unprovoked Jabs Wrestling Federation</p>
+          <h1>Fight nights. Contenders. Gold.</h1>
           <div class="hero-actions" aria-label="Spreadsheet actions">
             <a
               class="primary-action"
@@ -47,34 +45,29 @@
             >
               Open UJWF SHEET
             </a>
-            <a class="secondary-action" href="#rankings">View Power System</a>
+            <a class="secondary-action" href="#boards">View Boards</a>
+          </div>
+        </div>
+        <div class="champion-strip" aria-label="Current champions">
+          <div>
+            <span>Heavyweight</span>
+            <strong>SeanBz206</strong>
+          </div>
+          <div>
+            <span>Walk-Em Down</span>
+            <strong>xRockstar901x</strong>
+          </div>
+          <div>
+            <span>Tag-Team</span>
+            <strong>Vacant / TBD</strong>
           </div>
         </div>
       </section>
 
-      <section class="status-strip" aria-label="Current federation snapshot">
-        <div>
-          <span class="label">Main title</span>
-          <strong>SeanBz206</strong>
-        </div>
-        <div>
-          <span class="label">WED title</span>
-          <strong>xRockstar901x</strong>
-        </div>
-        <div>
-          <span class="label">Tag title</span>
-          <strong>Vacant / TBD</strong>
-        </div>
-        <div>
-          <span class="label">Sheet state</span>
-          <strong>Fresh results</strong>
-        </div>
-      </section>
-
-      <section id="shows" class="section">
+      <section id="shows" class="section show-section">
         <div class="section-heading">
-          <p class="eyebrow">Shows</p>
-          <h2>Four brands, one tracker</h2>
+          <p class="eyebrow">Brands</p>
+          <h2>Four nights. One record book.</h2>
         </div>
         <div class="show-grid">
           <article class="show-card mnj">
@@ -83,9 +76,11 @@
               src="assets/logos/monday-night-jabs.webp"
               alt="Monday Night Jabs logo"
             />
-            <span>MNJ</span>
-            <h3>Monday Night Jabs</h3>
-            <p>Red brand weekly show anchored by the Unprovoked Heavyweight Championship.</p>
+            <div class="card-foot">
+              <span>MNJ</span>
+              <strong>Monday Night Jabs</strong>
+              <small>Weekly red brand</small>
+            </div>
           </article>
           <article class="show-card wed">
             <img
@@ -93,9 +88,11 @@
               src="assets/logos/walk-em-down-wednesdays.webp"
               alt="Walk-Em Down Wednesdays logo"
             />
-            <span>WED</span>
-            <h3>Walk-Em Down Wednesday</h3>
-            <p>Teal and orange weekly fight night built around the Walk-Em Down Championship.</p>
+            <div class="card-foot">
+              <span>WED</span>
+              <strong>Walk-Em Down Wednesday</strong>
+              <small>Weekly teal brand</small>
+            </div>
           </article>
           <article class="show-card fnf">
             <img
@@ -103,9 +100,11 @@
               src="assets/logos/friday-night-fades.webp"
               alt="Friday Night Fades logo"
             />
-            <span>FNF</span>
-            <h3>Friday Night Fades</h3>
-            <p>Team and tag hub for the combined weekly roster and the Unprovoked Tag-Team title.</p>
+            <div class="card-foot">
+              <span>FNF</span>
+              <strong>Friday Night Fades</strong>
+              <small>Tag-team hub</small>
+            </div>
           </article>
           <article class="show-card sns">
             <img
@@ -113,115 +112,146 @@
               src="assets/logos/saturday-night-shakedown.webp"
               alt="Saturday Night Shakedown logo"
             />
-            <span>SNS</span>
-            <h3>Saturday Night Shakedown</h3>
-            <p>Monthly special event brand for bigger stakes, title moments, and marquee matches.</p>
+            <div class="card-foot">
+              <span>SNS</span>
+              <strong>Saturday Night Shakedown</strong>
+              <small>Monthly special event</small>
+            </div>
           </article>
         </div>
       </section>
 
-      <section id="championships" class="section championships-section">
-        <div class="section-heading">
-          <p class="eyebrow">Championships</p>
-          <h2>Titles tracked from the live sheet</h2>
-          <p>
-            Current champions, vacancies, title defenses, and past champions stay managed inside
-            UJWF SHEET while this page gives every belt its own place on the card.
-          </p>
+      <section id="boards" class="section boards-section">
+        <div class="section-heading boards-heading">
+          <p class="eyebrow">Contender boards</p>
+          <h2>Next in line.</h2>
         </div>
-        <div class="title-grid">
-          <article class="title-card mnj-title">
-            <img
-              class="title-logo"
-              src="assets/logos/unprovoked-heavyweight-championship.webp"
-              alt="Unprovoked Jabs Heavyweight Championship logo"
-            />
-            <div>
-              <span class="title-brand">Monday Night Jabs</span>
-              <h3>Unprovoked Heavyweight Championship</h3>
-              <p>Current Champion: <strong>SeanBz206</strong></p>
+        <div class="board-grid">
+          <article class="board-card board-mnj">
+            <div class="board-top">
+              <img src="assets/logos/monday-night-jabs.webp" alt="" />
+              <div>
+                <span>Monday Night Jabs</span>
+                <strong>Men's contenders</strong>
+              </div>
+            </div>
+            <div class="contender-list" aria-label="Monday Night Jabs contenders">
+              <div class="contender-row up"><b>1</b><span>Waxymrhb</span></div>
+              <div class="contender-row up"><b>2</b><span>Saman747</span></div>
+              <div class="contender-row steady"><b>3</b><span>Gamechanger97</span></div>
+              <div class="contender-row steady"><b>4</b><span>Jonathansb316</span></div>
+              <div class="contender-row down"><b>5</b><span>BartolomewOMEGA</span></div>
+              <div class="contender-row down"><b>6</b><span>Brass_Monkey_NYC</span></div>
+              <div class="contender-row down"><b>7</b><span>ZoOo_Oom</span></div>
             </div>
           </article>
-          <article class="title-card wed-title">
+          <article class="board-card board-wed">
+            <div class="board-top">
+              <img src="assets/logos/walk-em-down-wednesdays.webp" alt="" />
+              <div>
+                <span>Walk-Em Down Wednesday</span>
+                <strong>World contenders</strong>
+              </div>
+            </div>
+            <div class="contender-list" aria-label="Walk-Em Down Wednesday contenders">
+              <div class="contender-row up"><b>1</b><span>Califooya</span></div>
+              <div class="contender-row up"><b>2</b><span>That951boi</span></div>
+              <div class="contender-row down"><b>3</b><span>Okcbest</span></div>
+              <div class="contender-row steady"><b>4</b><span>CarnageStorm</span></div>
+              <div class="contender-row down"><b>5</b><span>PartyMaster84</span></div>
+              <div class="contender-row steady"><b>6</b><span>I_amClutch_HXT</span></div>
+              <div class="contender-row steady"><b>7</b><span>M0ney_T510</span></div>
+              <div class="contender-row down"><b>8</b><span>xRockstar901x</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="championships" class="section title-section">
+        <div class="section-heading">
+          <p class="eyebrow">Championships</p>
+          <h2>Every belt has a home.</h2>
+        </div>
+        <div class="title-grid">
+          <article class="title-card title-red">
             <img
-              class="title-logo"
+              src="assets/logos/unprovoked-heavyweight-championship.webp"
+              alt="Unprovoked Heavyweight Championship logo"
+            />
+            <span>Monday Night Jabs</span>
+            <strong>Unprovoked Heavyweight Championship</strong>
+            <small>SeanBz206</small>
+          </article>
+          <article class="title-card title-teal">
+            <img
               src="assets/logos/walk-em-down-championship.webp"
               alt="Walk-Em Down Championship logo"
             />
-            <div>
-              <span class="title-brand">Walk-Em Down Wednesday</span>
-              <h3>Walk-Em Down Championship</h3>
-              <p>Current Champion: <strong>xRockstar901x</strong></p>
-            </div>
+            <span>Walk-Em Down Wednesday</span>
+            <strong>Walk-Em Down Championship</strong>
+            <small>xRockstar901x</small>
           </article>
-          <article class="title-card mnj-title">
+          <article class="title-card title-red">
             <img
-              class="title-logo"
               src="assets/logos/southern-internet-championship.webp"
               alt="Southern Internet Championship logo"
             />
-            <div>
-              <span class="title-brand">Monday Night Jabs</span>
-              <h3>Southern Internet Champion</h3>
-              <p>Current Champion: <strong>Vacant / TBD</strong></p>
-            </div>
+            <span>Monday Night Jabs</span>
+            <strong>Southern Internet Champion</strong>
+            <small>Vacant / TBD</small>
           </article>
-          <article class="title-card wed-title">
+          <article class="title-card title-teal">
             <img
-              class="title-logo"
               src="assets/logos/unprovoked-chaos-championship.webp"
               alt="Unprovoked Chaos Championship logo"
             />
-            <div>
-              <span class="title-brand">Walk-Em Down Wednesday</span>
-              <h3>Unprovoked Chaos Champion</h3>
-              <p>Current Champion: <strong>Vacant / TBD</strong></p>
-            </div>
+            <span>Walk-Em Down Wednesday</span>
+            <strong>Unprovoked Chaos Champion</strong>
+            <small>Vacant / TBD</small>
           </article>
-          <article class="title-card fnf-title">
+          <article class="title-card title-green">
             <img
-              class="title-logo"
               src="assets/logos/unprovoked-tag-team-championship.webp"
               alt="Unprovoked Tag-Team Championship logo"
             />
-            <div>
-              <span class="title-brand">Friday Night Fades</span>
-              <h3>Unprovoked Tag-Team Championship</h3>
-              <p>Current Champions: <strong>Vacant / TBD</strong></p>
-            </div>
+            <span>Friday Night Fades</span>
+            <strong>Unprovoked Tag-Team Championship</strong>
+            <small>Vacant / TBD</small>
           </article>
         </div>
       </section>
 
-      <section id="rankings" class="section split-section">
-        <div class="section-copy">
-          <p class="eyebrow">Power rankings</p>
-          <h2>Score first. Head-to-head when it matters.</h2>
-          <p>
-            The ranking system rewards wins, finish quality, titles, tournament success, Rumble and
-            Gauntlet wins, and manually tracked eliminations. Team losses are lighter than solo losses.
-            Same-score ties use the Wins Vs matrix.
-          </p>
+      <section id="rankings" class="section ranking-section">
+        <div class="section-heading">
+          <p class="eyebrow">Power Ranking System</p>
+          <h2>The score behind the ladder.</h2>
         </div>
-        <div class="score-panel" aria-label="Power score weights">
-          <div class="score-row positive"><span>Wins</span><strong>+7</strong></div>
-          <div class="score-row positive"><span>Titles Held</span><strong>+15</strong></div>
-          <div class="score-row positive"><span>Tournament Wins</span><strong>+15</strong></div>
-          <div class="score-row positive"><span>Tournament Match Wins</span><strong>+4</strong></div>
-          <div class="score-row negative"><span>Solo / Non-Team Losses</span><strong>-5</strong></div>
-          <div class="score-row negative"><span>Team Losses</span><strong>-3</strong></div>
-          <div class="score-row mixed"><span>Streak Blocks</span><strong>+/- 3</strong></div>
+        <div class="ranking-grid" aria-label="Power ranking score weights">
+          <div class="score positive"><span>Matches</span><strong>+1</strong></div>
+          <div class="score positive"><span>Wins</span><strong>+7</strong></div>
+          <div class="score negative"><span>Solo losses</span><strong>-5</strong></div>
+          <div class="score negative"><span>Team losses</span><strong>-3</strong></div>
+          <div class="score positive"><span>Win % over 75</span><strong>+3</strong></div>
+          <div class="score positive"><span>Pinfall wins</span><strong>+2</strong></div>
+          <div class="score positive"><span>Submission / TKO wins</span><strong>+3</strong></div>
+          <div class="score negative"><span>Pinfall losses</span><strong>-2</strong></div>
+          <div class="score negative"><span>Submission / TKO losses</span><strong>-3</strong></div>
+          <div class="score mixed"><span>Streak block</span><strong>+/-3</strong></div>
+          <div class="score positive"><span>Rumble / Gauntlet wins</span><strong>+8</strong></div>
+          <div class="score positive"><span>Eliminations</span><strong>+1</strong></div>
+          <div class="score positive"><span>Titles held</span><strong>+15</strong></div>
+          <div class="score positive"><span>Tournament match wins</span><strong>+4</strong></div>
+          <div class="score positive"><span>Tournament winners</span><strong>+15</strong></div>
+          <div class="score negative"><span>Draws / no contests</span><strong>-1</strong></div>
+          <div class="score neutral"><span>Head-to-head edge</span><strong>Wins Vs</strong></div>
+          <div class="score neutral"><span>Power ranking</span><strong>Output</strong></div>
         </div>
       </section>
 
-      <section id="tracker" class="section tracker-section">
-        <div class="tracker-copy">
-          <p class="eyebrow">Live spreadsheet</p>
-          <h2>The sheet stays the source of truth.</h2>
-          <p>
-            Enter matches, update champions, track tournament winners, keep title defenses, and let
-            UJWF SHEET calculate the stats behind the federation.
-          </p>
+      <section id="tracker" class="tracker-section">
+        <div>
+          <p class="eyebrow">Live tracker</p>
+          <h2>Open the live record book.</h2>
         </div>
         <a
           class="tracker-link"
@@ -229,7 +259,7 @@
           target="_blank"
           rel="noreferrer"
         >
-          Open the live tracker
+          Open the live sheet
         </a>
       </section>
     </main>
