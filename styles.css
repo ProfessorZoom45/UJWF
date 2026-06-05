@@ -245,18 +245,36 @@ h2 {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1px;
-  width: min(930px, 100%);
+  width: min(1120px, 100%);
   margin-top: 72px;
   background: rgba(220, 224, 225, 0.22);
   border: 1px solid rgba(220, 224, 225, 0.2);
 }
 
-.champion-strip div {
+.champion-tile {
   min-height: 76px;
   padding: 16px;
-  background: rgba(13, 13, 13, 0.76);
+  border-top: 4px solid var(--tile-accent);
+  background:
+    linear-gradient(150deg, var(--tile-wash), rgba(13, 13, 13, 0.78) 52%),
+    rgba(13, 13, 13, 0.76);
+}
+
+.mnj-title {
+  --tile-accent: var(--red);
+  --tile-wash: rgba(122, 0, 0, 0.72);
+}
+
+.wed-title {
+  --tile-accent: var(--teal);
+  --tile-wash: rgba(31, 76, 83, 0.8);
+}
+
+.fnf-title {
+  --tile-accent: var(--green);
+  --tile-wash: rgba(64, 128, 0, 0.78);
 }
 
 .champion-strip span,
@@ -274,6 +292,11 @@ h2 {
 .champion-strip strong {
   color: var(--gold);
   font-size: 18px;
+}
+
+.champion-strip .vacant strong {
+  color: var(--muted);
+  font-style: italic;
 }
 
 .section {
