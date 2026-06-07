@@ -1,8 +1,11 @@
 .video-section {
+  position: relative;
+  overflow: hidden;
   border-top: 1px solid var(--line);
   background:
-    linear-gradient(135deg, rgba(140, 192, 0, 0.14), transparent 32%),
-    linear-gradient(315deg, rgba(209, 61, 192, 0.14), transparent 30%),
+    linear-gradient(135deg, rgba(140, 192, 0, 0.22), transparent 32%),
+    linear-gradient(315deg, rgba(230, 0, 0, 0.16), transparent 30%),
+    linear-gradient(180deg, rgba(255, 240, 119, 0.08), transparent 22%),
     #08090a;
 }
 
@@ -12,21 +15,26 @@
 
 .video-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.72fr);
-  gap: 18px;
+  grid-template-columns: 1fr;
+  gap: 20px;
   align-items: stretch;
+  width: min(100%, 1760px);
+  margin-inline: auto;
 }
 
 .video-frame {
   position: relative;
   overflow: hidden;
-  min-height: 420px;
-  border: 1px solid rgba(140, 192, 0, 0.5);
+  min-height: clamp(900px, 72vw, 1280px);
+  border: 2px solid rgba(255, 240, 119, 0.78);
   border-radius: 8px;
   background:
     linear-gradient(145deg, rgba(220, 224, 225, 0.08), transparent 38%),
     #0b0c0d;
-  box-shadow: 0 28px 58px rgba(0, 0, 0, 0.36);
+  box-shadow:
+    0 34px 78px rgba(0, 0, 0, 0.48),
+    0 0 54px rgba(140, 192, 0, 0.25),
+    0 0 80px rgba(230, 0, 0, 0.14);
 }
 
 .video-frame::before {
@@ -47,44 +55,77 @@
 
 .video-card {
   position: relative;
-  display: grid;
-  align-content: end;
-  min-height: 420px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 330px;
   overflow: hidden;
-  padding: 24px;
-  border: 1px solid rgba(220, 224, 225, 0.16);
+  padding: clamp(28px, 5vw, 58px);
+  border: 2px solid rgba(255, 240, 119, 0.38);
   border-radius: 8px;
   background:
-    linear-gradient(150deg, rgba(64, 128, 0, 0.34), transparent 48%),
-    linear-gradient(180deg, rgba(8, 9, 10, 0.56), rgba(8, 9, 10, 0.9)),
-    url("assets/logos/friday-night-fades.webp") center 24px / min(260px, 78%) no-repeat,
+    linear-gradient(100deg, rgba(7, 7, 8, 0.98) 0%, rgba(7, 7, 8, 0.72) 45%, rgba(7, 7, 8, 0.92) 100%),
+    linear-gradient(150deg, rgba(140, 192, 0, 0.46), transparent 54%),
+    url("assets/logos/friday-night-fades.webp") right clamp(20px, 5vw, 60px) center / min(470px, 38vw) no-repeat,
     var(--panel);
+  box-shadow:
+    inset 0 0 0 1px rgba(220, 224, 225, 0.08),
+    0 18px 54px rgba(0, 0, 0, 0.3),
+    0 0 38px rgba(140, 192, 0, 0.16);
+}
+
+.video-card::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 5px;
+  content: "";
+  background: linear-gradient(90deg, var(--green), var(--gold), var(--red));
 }
 
 .video-card span,
 .video-card small {
   display: block;
-  color: var(--muted);
-  font-size: 11px;
+  color: var(--green);
+  font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(140, 192, 0, 0.48);
+}
+
+.video-card > .video-copy > span {
+  display: inline-block;
+  padding: 8px 11px;
+  border: 1px solid rgba(140, 192, 0, 0.5);
+  background: rgba(140, 192, 0, 0.12);
+  animation: videoPulse 1.45s ease-in-out infinite alternate;
 }
 
 .video-card strong {
   display: block;
-  margin: 10px 0 8px;
-  color: var(--text);
-  font-size: clamp(30px, 3.8vw, 48px);
+  margin: 16px 0 12px;
+  color: var(--gold);
+  font-size: clamp(58px, 8.6vw, 124px);
   line-height: 0.98;
   text-transform: uppercase;
+  text-shadow:
+    0 0 18px rgba(140, 192, 0, 0.42),
+    0 0 34px rgba(230, 0, 0, 0.32),
+    3px 3px 0 rgba(0, 0, 0, 0.75);
+}
+
+.video-card strong span {
+  display: block;
 }
 
 .video-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 22px;
+  gap: 12px;
+  min-width: min(420px, 100%);
+  margin-top: 28px;
+  justify-content: flex-end;
 }
 
 .youtube-action,
@@ -92,35 +133,62 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 12px 14px;
+  min-height: 58px;
+  padding: 16px 22px;
   border: 1px solid transparent;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 950;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .youtube-action {
-  background: var(--green);
+  background: linear-gradient(135deg, var(--green), var(--gold) 55%, var(--red));
   color: var(--ink);
+  box-shadow: 0 0 24px rgba(140, 192, 0, 0.26);
+  animation: actionGlow 1.8s ease-in-out infinite alternate;
 }
 
 .playlist-action {
-  border-color: rgba(220, 224, 225, 0.28);
-  background: rgba(7, 7, 8, 0.62);
+  border-color: rgba(255, 240, 119, 0.36);
+  background: rgba(7, 7, 8, 0.74);
   color: var(--text);
 }
 
+@keyframes videoPulse {
+  from {
+    box-shadow: 0 0 0 rgba(140, 192, 0, 0);
+  }
+  to {
+    box-shadow: 0 0 24px rgba(140, 192, 0, 0.35);
+  }
+}
+
+@keyframes actionGlow {
+  from {
+    filter: saturate(1);
+  }
+  to {
+    filter: saturate(1.35);
+  }
+}
+
 @media (max-width: 1080px) {
-  .video-layout {
-    grid-template-columns: 1fr;
+  .video-card {
+    display: grid;
+    align-content: end;
   }
 }
 
 @media (max-width: 760px) {
-  .video-frame,
+  .video-frame {
+    min-height: min(620px, 132vw);
+  }
+
   .video-card {
-    min-height: 300px;
+    min-height: 320px;
+    background-position: center 24px;
+    background-size: min(260px, 78%);
   }
 
   .video-actions,
