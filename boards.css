@@ -1,0 +1,56 @@
+.board-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.contender-row {
+  grid-template-columns: 38px minmax(0, 1fr) 74px 24px;
+}
+
+.contender-row em {
+  justify-self: end;
+  color: var(--gold);
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 950;
+}
+
+.board-fnf {
+  --board-accent: var(--green);
+  border-color: rgba(140, 192, 0, 0.58);
+}
+
+.team-board-list {
+  gap: 10px;
+}
+
+.team-power-row {
+  min-height: 62px;
+  grid-template-columns: 38px minmax(0, 1fr) 64px 24px;
+}
+
+.team-power-row span {
+  display: grid;
+  gap: 4px;
+  overflow: visible;
+  white-space: normal;
+}
+
+.team-power-row span strong {
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.05;
+  text-transform: none;
+}
+
+.team-power-row span small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 780;
+  line-height: 1.25;
+}
+
+@media (max-width: 1080px) {
+  .board-grid {
+    grid-template-columns: 1fr;
+  }
+}
