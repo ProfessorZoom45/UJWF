@@ -1,0 +1,131 @@
+.video-section {
+  border-top: 1px solid var(--line);
+  background:
+    linear-gradient(135deg, rgba(140, 192, 0, 0.14), transparent 32%),
+    linear-gradient(315deg, rgba(209, 61, 192, 0.14), transparent 30%),
+    #08090a;
+}
+
+.video-heading {
+  max-width: 940px;
+}
+
+.video-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.72fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.video-frame {
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+  border: 1px solid rgba(140, 192, 0, 0.5);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(220, 224, 225, 0.08), transparent 38%),
+    #0b0c0d;
+  box-shadow: 0 28px 58px rgba(0, 0, 0, 0.36);
+}
+
+.video-frame::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(135deg, rgba(140, 192, 0, 0.16), transparent 42%);
+}
+
+.video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-card {
+  position: relative;
+  display: grid;
+  align-content: end;
+  min-height: 420px;
+  overflow: hidden;
+  padding: 24px;
+  border: 1px solid rgba(220, 224, 225, 0.16);
+  border-radius: 8px;
+  background:
+    linear-gradient(150deg, rgba(64, 128, 0, 0.34), transparent 48%),
+    linear-gradient(180deg, rgba(8, 9, 10, 0.56), rgba(8, 9, 10, 0.9)),
+    url("assets/logos/friday-night-fades.webp") center 24px / min(260px, 78%) no-repeat,
+    var(--panel);
+}
+
+.video-card span,
+.video-card small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.video-card strong {
+  display: block;
+  margin: 10px 0 8px;
+  color: var(--text);
+  font-size: clamp(30px, 3.8vw, 48px);
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.video-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.youtube-action,
+.playlist-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 14px;
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.youtube-action {
+  background: var(--green);
+  color: var(--ink);
+}
+
+.playlist-action {
+  border-color: rgba(220, 224, 225, 0.28);
+  background: rgba(7, 7, 8, 0.62);
+  color: var(--text);
+}
+
+@media (max-width: 1080px) {
+  .video-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .video-frame,
+  .video-card {
+    min-height: 300px;
+  }
+
+  .video-actions,
+  .youtube-action,
+  .playlist-action {
+    width: 100%;
+  }
+}
