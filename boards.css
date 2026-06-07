@@ -11,18 +11,18 @@
 .contender-row {
   align-items: center;
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .board-table-header {
   min-height: 34px;
-  padding: 7px 10px;
+  padding: 6px 8px;
   border: 1px solid rgba(220, 224, 225, 0.14);
   background: rgba(220, 224, 225, 0.06);
   color: var(--muted);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 950;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
@@ -39,20 +39,22 @@
 .board-table-header i {
   min-width: 0;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 9px;
   font-style: normal;
   font-weight: 950;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
+  line-height: 1.08;
+  text-align: center;
+  text-overflow: clip;
+  white-space: normal;
 }
 
 .rank-board-row {
-  grid-template-columns: 34px minmax(105px, 1fr) minmax(120px, 1.05fr) 58px minmax(70px, 0.75fr);
+  grid-template-columns: 66px minmax(92px, 1fr) minmax(112px, 1.05fr) 54px minmax(64px, 0.75fr);
 }
 
 .contender-row {
-  min-height: 50px;
+  min-height: 46px;
 }
 
 .contender-row b,
@@ -69,28 +71,30 @@
 .contender-row span,
 .team-power-row span {
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
+  font-size: 13px;
+  line-height: 1.12;
+  text-overflow: clip;
+  white-space: normal;
 }
 
 .contender-row small,
 .contender-row i {
   min-width: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 10.5px;
   font-style: normal;
   font-weight: 820;
   line-height: 1.2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
 }
 
 .contender-row em {
   justify-self: end;
   color: var(--gold);
-  font-size: 15px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 950;
 }
@@ -105,15 +109,15 @@
 }
 
 .team-power-row {
-  min-height: 64px;
-  grid-template-columns: 34px minmax(110px, 0.9fr) minmax(160px, 1.45fr) 58px;
+  min-height: 58px;
+  grid-template-columns: 72px minmax(100px, 0.9fr) minmax(148px, 1.45fr) 54px;
 }
 
 .team-power-row small {
   min-width: 0;
   color: var(--muted);
   display: grid;
-  font-size: 12px;
+  font-size: 10.5px;
   font-weight: 780;
   line-height: 1.22;
   white-space: normal;
@@ -122,7 +126,7 @@
 .team-power-row em {
   justify-self: end;
   color: var(--gold);
-  font-size: 15px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 950;
 }
@@ -133,7 +137,7 @@
   }
 
   .rank-board-row {
-    grid-template-columns: 34px minmax(130px, 1fr) minmax(120px, 0.9fr) 58px minmax(70px, 0.7fr);
+    grid-template-columns: 66px minmax(128px, 1fr) minmax(118px, 0.9fr) 54px minmax(70px, 0.7fr);
   }
 }
 
