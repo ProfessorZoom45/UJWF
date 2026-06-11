@@ -18,7 +18,7 @@
   };
 
   const CHAMPIONSHIP_IMAGES = {
-    "unprovoked heavyweight championship": "assets/champions/i-do-dis-heavyweight.jpeg",
+    "unprovoked heavyweight championship": "assets/logos/monday-night-jabs.webp",
     "unprovoked chaos championship": "assets/champions/zooo-oom-chaos.jpeg",
     "walk-em down championship": "assets/champions/renny-waves-wed.jpeg",
     "southern internet championship": "assets/champions/xrockstar-southern.jpeg",
@@ -29,7 +29,7 @@
     {
       title: "Unprovoked Heavyweight Championship",
       show: "Monday Night Jabs",
-      champion: "I_Do_Dis_314",
+      champion: "B-Wilder",
       defenses: "0"
     },
     {
@@ -53,7 +53,7 @@
     {
       title: "Unprovoked Tag-Team Championship",
       show: "Friday Night Fades",
-      champion: "Tru Kingz",
+      champion: "The Family",
       defenses: "0"
     }
   ];
@@ -291,17 +291,31 @@
       .slice(0, 10);
   }
 
-  function showRankRowsFromGrid(rows) {
+  function showRankRowsFromGrid(rows, startColumn = 0) {
     return rows
       .slice(2)
       .map((row) => ({
-        rank: row[0] || "",
-        wrestler: row[1] || "",
-        team: row[2] || "Free Agent",
-        score: row[3] || "0",
-        rival: row[4] || ""
+        rank: row[startColumn] || "",
+        wrestler: row[startColumn + 1] || "",
+        team: row[startColumn + 2] || "Free Agent",
+        score: row[startColumn + 3] || "0",
+        rival: row[startColumn + 4] || ""
       }))
       .filter((row) => row.rank && row.wrestler)
+      .slice(0, 10);
+  }
+
+  function teamRowsFromGrid(rows, startColumn = 12) {
+    return rows
+      .slice(2)
+      .map((row) => ({
+        rank: row[startColumn] || "",
+        team: row[startColumn + 1] || "",
+        members: row[startColumn + 2] || "",
+        score: row[startColumn + 3] || "0",
+        rival: row[startColumn + 4] || ""
+      }))
+      .filter((row) => row.rank && row.team && normalize(row.team) !== "no formal team")
       .slice(0, 10);
   }
 
@@ -326,20 +340,9 @@
     });
   }
 
-  function renderTeamBoard(rows) {
+  function renderTeamBoardRows(teams) {
     const board = $('[data-board="fnf-teams"]');
     if (!board) return;
-
-    const teams = rows
-      .map((row) => ({
-        rank: get(row, ["Show Team Rank", "Team Rank", "Rank"]),
-        team: get(row, ["Team Name", "Team / Stable Name", "Team", "Faction"]),
-        members: get(row, ["Wrestlers In Stable", "Members", "Member 1"]),
-        score: get(row, ["Combined Team Power Score", "Team Power Score", "Power Score", "Score"])
-      }))
-      .filter((row) => row.team && normalize(row.team) !== "no formal team")
-      .sort((a, b) => numberValue(a.rank, 999) - numberValue(b.rank, 999) || numberValue(b.score) - numberValue(a.score))
-      .slice(0, 10);
 
     if (!teams.length) return;
 
@@ -357,6 +360,21 @@
       node.append(el("em", Number(row.score) < 0 ? "negative-score" : "", row.score || "0"));
       board.append(node);
     });
+  }
+
+  function renderTeamBoard(rows) {
+    const teams = rows
+      .map((row) => ({
+        rank: get(row, ["Show Team Rank", "Team Rank", "Rank"]),
+        team: get(row, ["Team Name", "Team / Stable Name", "Team", "Faction"]),
+        members: get(row, ["Wrestlers In Stable", "Members", "Member 1"]),
+        score: get(row, ["Combined Team Power Score", "Team Power Score", "Power Score", "Score"])
+      }))
+      .filter((row) => row.team && normalize(row.team) !== "no formal team")
+      .sort((a, b) => numberValue(a.rank, 999) - numberValue(b.rank, 999) || numberValue(b.score) - numberValue(a.score))
+      .slice(0, 10);
+
+    renderTeamBoardRows(teams);
   }
 
   function renderRecentResults(rows) {
@@ -443,10 +461,11 @@
       fetchSheet(CONFIG.sheets.wedRoster),
       fetchSheet(CONFIG.sheets.teams),
       fetchSheetGrid(CONFIG.sheets.mnjRoster, "K1:O12"),
-      fetchSheetGrid(CONFIG.sheets.wedRoster, "K1:O12")
+      fetchSheetGrid(CONFIG.sheets.wedRoster, "K1:O12"),
+      fetchSheetGrid(CONFIG.sheets.fnfRoster, "H1:Z40")
     ]);
 
-    const [champions, rankings, matches, mnjRoster, wedRoster, teams, mnjShowRanks, wedShowRanks] = requests.map((result) =>
+    const [champions, rankings, matches, mnjRoster, wedRoster, teams, mnjShowRanks, wedShowRanks, fnfBoardGrid] = requests.map((result) =>
       result.status === "fulfilled" ? result.value : []
     );
 
@@ -455,14 +474,18 @@
       if (mnjRoster.length) renderRoster("mnj", mnjRoster, ["Wrestler", "Name"]);
       if (wedRoster.length) renderRoster("wed", wedRoster, ["Wrestler", "Name"]);
       if (teams.length) renderRoster("fnf", teams, ["Team / Stable Name", "Team Name", "Faction"]);
-      const mnjBoardRows = showRankRowsFromGrid(mnjShowRanks);
-      const wedBoardRows = showRankRowsFromGrid(wedShowRanks);
+      const mnjFromFNF = showRankRowsFromGrid(fnfBoardGrid, 0);
+      const wedFromFNF = showRankRowsFromGrid(fnfBoardGrid, 6);
+      const teamRows = teamRowsFromGrid(fnfBoardGrid, 12);
+      const mnjBoardRows = mnjFromFNF.length ? mnjFromFNF : showRankRowsFromGrid(mnjShowRanks);
+      const wedBoardRows = wedFromFNF.length ? wedFromFNF : showRankRowsFromGrid(wedShowRanks);
       if (mnjBoardRows.length) renderWrestlerBoard("mnj-wrestlers", mnjBoardRows);
       if (wedBoardRows.length) renderWrestlerBoard("wed-wrestlers", wedBoardRows);
+      if (teamRows.length) renderTeamBoardRows(teamRows);
       if (rankings.length) {
         if (!mnjBoardRows.length) renderWrestlerBoard("mnj-wrestlers", powerRankRows(rankings, "monday"));
         if (!wedBoardRows.length) renderWrestlerBoard("wed-wrestlers", powerRankRows(rankings, "walk"));
-        renderTeamBoard(rankings);
+        if (!teamRows.length) renderTeamBoard(rankings);
       }
       if (matches.length) renderRecentResults(matches);
 
