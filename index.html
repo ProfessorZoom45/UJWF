@@ -11,14 +11,28 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="boards.css" />
     <link rel="stylesheet" href="videos.css" />
+    <script src="site-data.js" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#top">Skip to content</a>
     <header class="site-header" aria-label="UJWF navigation">
       <a class="brand" href="#top" aria-label="UJWF home">
         <img class="brand-logo" src="assets/logos/ujwf-federation.webp" alt="" />
         <span>UJWF</span>
       </a>
-      <nav class="nav-links" aria-label="Primary navigation">
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="primary-nav" class="nav-links" aria-label="Primary navigation">
+        <a href="#top">Home</a>
         <a href="#shows">Shows</a>
         <a href="#recap">Recap</a>
         <a href="#videos">Videos</a>
@@ -55,8 +69,11 @@
             </a>
             <a class="secondary-action" href="#videos">Watch Latest</a>
           </div>
+          <p id="site-updated" class="site-updated" aria-live="polite">
+            Live sheet data loading...
+          </p>
         </div>
-        <div class="champion-strip" aria-label="Current champions">
+        <div id="current-champions-strip" class="champion-strip" aria-label="Current champions">
           <div class="champion-tile mnj-title">
             <span>Heavyweight</span>
             <strong>I_Do_Dis_314</strong>
@@ -83,16 +100,16 @@
       <section id="recap" class="section recap-section">
         <div class="section-heading recap-heading">
           <p class="eyebrow">Current Heat</p>
-          <h2>SNS changed the whole board.</h2>
+          <h2>Week 5 kept the pressure high.</h2>
         </div>
         <div class="recap-layout">
           <article class="recap-main">
             <span class="recap-label">Full recap to current</span>
             <p>
-              Saturday Night Shakedown Week 4 flipped the title picture. I_Do_Dis_314 pinned SeanBz206 to become Unprovoked Heavyweight Champion, ZoOo_Oom survived the Chamber for the Chaos title, and Tru Kingz climbed out of a three-team TLC fight with the tag belts.
+              Monday Night Jabs Week 5 was all movement: Major_Smoove stopped Saman747 by KO, Brass_Monkey_NYC pinned Jonathansb316, B-Wilder beat MusicSn, ZoOo_Oom escaped a steel-cage triple threat, and I_Do_Dis_314 pinned SeanBz206 to keep the Heavyweight title.
             </p>
             <p>
-              Renny_Waves beat Califooya to keep the Walk-Em Down Championship rolling, while xRockstar901x survived the Southern Internet Chamber. The rankings now have I_Do_Dis_314 and Renny_Waves setting the pace, with Califooya, Gamechanger97, and the new title holders pressing close behind.
+              Walk-Em Down Wednesday stayed sharp with BabyboyJacksonJr, Huh_What_SirD23z, xRockstar901x, and Renny_Waves all winning. Friday Night Fades closed with chaos: That951boi beat Califooya, Team Kentucky won the four-team tornado tag, The Legends beat Tha Product, Ramoja3 won the battle royal, and B-Wilder pinned M0ney_T510.
             </p>
           </article>
           <aside class="heat-card" aria-label="Momentum names">
@@ -100,10 +117,10 @@
             <div class="heat-list">
               <strong>I_Do_Dis_314</strong>
               <strong>Renny_Waves</strong>
-              <strong>Califooya</strong>
-              <strong>Gamechanger97</strong>
+              <strong>That951boi</strong>
               <strong>ZoOo_Oom</strong>
-              <strong>Tru Kingz</strong>
+              <strong>B-Wilder</strong>
+              <strong>BabyboyJacksonJr</strong>
               <strong>xRockstar901x</strong>
             </div>
           </aside>
@@ -111,26 +128,27 @@
         <div class="recap-grid" aria-label="Show recap highlights">
           <article class="recap-show recap-mnj">
             <span>MNJ</span>
-            <strong>I_Do_Dis_314 takes Heavyweight gold.</strong>
-            <small>ZoOo_Oom adds the Chaos title after the SNS Chamber.</small>
+            <strong>I_Do_Dis_314 stays perfect.</strong>
+            <small>ZoOo_Oom and B-Wilder keep climbing while Major_Smoove snaps back with a KO.</small>
           </article>
           <article class="recap-show recap-wed">
             <span>WED</span>
-            <strong>Renny_Waves and xRockstar901x leave SNS with gold.</strong>
-            <small>Renny_Waves keeps the WED title; xRockstar901x wins Southern Internet.</small>
+            <strong>Renny_Waves still leads the teal brand.</strong>
+            <small>BabyboyJacksonJr, Huh_What_SirD23z, and xRockstar901x all add wins.</small>
           </article>
           <article class="recap-show recap-fnf">
             <span>FNF</span>
-            <strong>Tru Kingz climb out with the tag titles.</strong>
-            <small>M0ney_T510 and BabyboyJacksonJr secure the ladder objective over Los Amigos and The Legends.</small>
+            <strong>Friday turned into a fight-board shakeup.</strong>
+            <small>Team Kentucky, The Legends, Ramoja3, That951boi, and B-Wilder all leave with wins.</small>
           </article>
         </div>
+        <div id="live-recent-results" class="live-recent-results" aria-live="polite"></div>
       </section>
 
       <section id="videos" class="section video-section">
         <div class="section-heading video-heading">
           <p class="eyebrow">UJWF TV</p>
-          <h2>Latest UJWF Video</h2>
+          <h2>Latest UPJWF Video</h2>
           <p class="video-subline">Saturday Night Shakedown 1</p>
         </div>
         <div class="video-layout">
@@ -175,7 +193,6 @@
         </div>
       </section>
 
-      <!-- Locked user-customized brand-card format. Preserve this structure in future website edits. -->
       <section id="shows" class="section show-section">
         <div class="section-heading">
           <p class="eyebrow">Brands</p>
@@ -248,10 +265,10 @@
               <img src="assets/logos/monday-night-jabs.webp" alt="" />
               <div>
                 <span>Monday Night Jabs</span>
-                <strong>Weekly Roster</strong>
+                <strong>Weekly red roster</strong>
               </div>
             </div>
-            <ul class="name-list">
+            <ul class="name-list" data-roster-list="mnj">
               <li>B-Wilder</li>
               <li>BartholomewOMEGA</li>
               <li>Brass_Monkey_NYC</li>
@@ -275,10 +292,10 @@
               <img src="assets/logos/walk-em-down-wednesdays.webp" alt="" />
               <div>
                 <span>Walk-Em Down Wednesday</span>
-                <strong>Weekly Roster</strong>
+                <strong>Weekly teal roster</strong>
               </div>
             </div>
-            <ul class="name-list">
+            <ul class="name-list" data-roster-list="wed">
               <li>BabyboyJacksonJr</li>
               <li>Califooya</li>
               <li>CarnageStorm</li>
@@ -302,14 +319,14 @@
               <img src="assets/logos/friday-night-fades.webp" alt="" />
               <div>
                 <span>Friday Night Fades</span>
-                <strong>Crossover Tag Roster</strong>
+                <strong>Cross-show tag hub</strong>
               </div>
             </div>
             <div class="roster-copy">
               <b>Eligible pool</b>
               <p>All Monday Night Jabs and Walk-Em Down Wednesday wrestlers are eligible while keeping their original home show.</p>
             </div>
-            <ul class="team-list">
+            <ul class="team-list" data-roster-list="fnf">
               <li>Tha Product</li>
               <li>Sutton, Sutton And Sutton LLC</li>
               <li>The Bar</li>
@@ -325,7 +342,7 @@
               <img src="assets/logos/saturday-night-shakedown.webp" alt="" />
               <div>
                 <span>Saturday Night Shakedown</span>
-                <strong>Monthly Crossover Event</strong>
+                <strong>Monthly crossover card</strong>
               </div>
             </div>
             <div class="roster-copy">
@@ -350,20 +367,20 @@
                 <strong>Top 10 Wrestlers</strong>
               </div>
             </div>
-            <div class="contender-list rank-board-list" aria-label="Monday Night Jabs Top 10 Wrestlers">
+            <div class="contender-list rank-board-list" data-board="mnj-wrestlers" aria-label="Monday Night Jabs Top 10 Wrestlers">
               <div class="board-table-header rank-board-row">
                 <b>Show Rank</b><span>Wrestler</span><small>Team</small><em>Score</em><i>Rival</i>
               </div>
-              <div class="contender-row rank-board-row champion-row"><b>1</b><span>I_Do_Dis_314</span><small>The Legends</small><em>96</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>2</b><span>Gamechanger97</span><small>The Legends</small><em>41</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>2</b><span>SeanBz206</span><small>The Bar</small><em>41</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>4</b><span>MusicSn</span><small>Free Agent</small><em>28</em><i></i></div>
-              <div class="contender-row rank-board-row champion-row"><b>5</b><span>ZoOo_Oom</span><small>Tha Product</small><em>23</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>6</b><span>Freexsmoke91</span><small>Sutton, Sutton And Sutton LLC</small><em>22</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>7</b><span>B-Wilder</span><small>Free Agent</small><em>9</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>8</b><span>McBuckets_32</span><small>Free Agent</small><em>8</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>9</b><span>G2_daJuice24</span><small>Free Agent</small><em>6</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>10</b><span>Brass_Monkey_NYC</span><small>Los Amigos</small><em>4</em><i></i></div>
+              <div class="contender-row rank-board-row champion-row"><b>1</b><span>I_Do_Dis_314</span><small>The Legends</small><em>141</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>2</b><span>Gamechanger97</span><small>The Legends</small><em>32</em><i></i></div>
+              <div class="contender-row rank-board-row champion-row"><b>3</b><span>ZoOo_Oom</span><small>Tha Product</small><em>31</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>4</b><span>B-Wilder</span><small>Free Agent</small><em>29</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>5</b><span>Freexsmoke91</span><small>Sutton, Sutton And Sutton LLC</small><em>22</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>6</b><span>MusicSn</span><small>Free Agent</small><em>15</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>7</b><span>SeanBz206</span><small>The Bar</small><em>13</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>8</b><span>Brass_Monkey_NYC</span><small>Los Amigos</small><em>12</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>9</b><span>G2_daJuice24</span><small>Free Agent</small><em>2</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>10</b><span>McBuckets_32</span><small>Free Agent</small><em>-3</em><i></i></div>
             </div>
           </article>
           <article class="board-card board-wed">
@@ -374,20 +391,20 @@
                 <strong>Top 10 Wrestlers</strong>
               </div>
             </div>
-            <div class="contender-list rank-board-list" aria-label="Walk-Em Down Wednesday Top 10 Wrestlers">
+            <div class="contender-list rank-board-list" data-board="wed-wrestlers" aria-label="Walk-Em Down Wednesday Top 10 Wrestlers">
               <div class="board-table-header rank-board-row">
                 <b>Show Rank</b><span>Wrestler</span><small>Team</small><em>Score</em><i>Rival</i>
               </div>
-              <div class="contender-row rank-board-row champion-row"><b>1</b><span>Renny_Waves</span><small>Sutton, Sutton And Sutton LLC</small><em>77</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>2</b><span>Califooya</span><small>Sutton, Sutton And Sutton LLC</small><em>57</em><i>That951boi</i></div>
-              <div class="contender-row rank-board-row"><b>3</b><span>That951boi</span><small>The Legends</small><em>33</em><i>Califooya</i></div>
-              <div class="contender-row rank-board-row"><b>4</b><span>Okcbest</span><small>Team Kentucky</small><em>24</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>5</b><span>LonestarTTV</span><small>Los Amigos</small><em>20</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>6</b><span>M0ney_T510</span><small>Tru Kingz</small><em>19</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>7</b><span>BabyboyJacksonJr</span><small>Tru Kingz</small><em>18</em><i></i></div>
-              <div class="contender-row rank-board-row champion-row"><b>8</b><span>xRockstar901x</span><small>Free Agent</small><em>15</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>9</b><span>Huh_What_SirD23z</span><small>Free Agent</small><em>12</em><i></i></div>
-              <div class="contender-row rank-board-row"><b>10</b><span>PartyMaster84</span><small>Free Agent</small><em>10</em><i></i></div>
+              <div class="contender-row rank-board-row champion-row"><b>1</b><span>Renny_Waves</span><small>Sutton, Sutton And Sutton LLC</small><em>87</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>2</b><span>Califooya</span><small>Sutton, Sutton And Sutton LLC</small><em>51</em><i>That951boi</i></div>
+              <div class="contender-row rank-board-row"><b>3</b><span>That951boi</span><small>The Legends</small><em>43</em><i>Califooya</i></div>
+              <div class="contender-row rank-board-row"><b>4</b><span>Okcbest</span><small>Team Kentucky</small><em>34</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>5</b><span>Huh_What_SirD23z</span><small>Free Agent</small><em>32</em><i></i></div>
+              <div class="contender-row rank-board-row champion-row"><b>6</b><span>BabyboyJacksonJr</span><small>Tru Kingz</small><em>28</em><i></i></div>
+              <div class="contender-row rank-board-row champion-row"><b>7</b><span>xRockstar901x</span><small>Free Agent</small><em>25</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>8</b><span>LonestarTTV</span><small>Los Amigos</small><em>7</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>9</b><span>Ramoja3</span><small>Free Agent</small><em>6</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>10</b><span>Chef_Boyaree</span><small>Team Kentucky</small><em>2</em><i></i></div>
             </div>
           </article>
           <article class="board-card board-fnf">
@@ -398,18 +415,17 @@
                 <strong>Top Teams</strong>
               </div>
             </div>
-            <div class="contender-list team-board-list" aria-label="Friday Night Fades Top Teams">
+            <div class="contender-list team-board-list" data-board="fnf-teams" aria-label="Friday Night Fades Top Teams">
               <div class="board-table-header team-power-row">
                 <b>Team Rank</b><span>Team</span><small>Wrestlers In Stable</small><em>Score</em>
               </div>
-              <div class="contender-row team-power-row"><b>1</b><span>The Legends</span><small>I_Do_Dis_314, That951boi, Gamechanger97</small><em>170</em></div>
-              <div class="contender-row team-power-row"><b>2</b><span>Sutton, Sutton And Sutton LLC</span><small>Freexsmoke91, Califooya, Renny_Waves, Waxymrhb</small><em>145</em></div>
-              <div class="contender-row team-power-row"><b>3</b><span>The Bar</span><small>SeanBz206, CarnageStorm</small><em>35</em></div>
-              <div class="contender-row team-power-row champion-row"><b>4</b><span>Tru Kingz</span><small>BabyboyJacksonJr, M0ney_T510, Jonathansb316</small><em>33</em></div>
-              <div class="contender-row team-power-row"><b>5</b><span>Los Amigos</span><small>Brass_Monkey_NYC, LonestarTTV</small><em>24</em></div>
-              <div class="contender-row team-power-row"><b>6</b><span>Tha Product</span><small>ZoOo_Oom, BartholomewOMEGA</small><em>15</em></div>
-              <div class="contender-row team-power-row"><b>7</b><span>No Formal Team</span><small></small><em>0</em></div>
-              <div class="contender-row team-power-row"><b>8</b><span>Team Kentucky</span><small>Okcbest, Chef_Boyaree, Major_Smoove</small><em>-4</em></div>
+              <div class="contender-row team-power-row"><b>1</b><span>The Legends</span><small>I_Do_Dis_314, That951boi, Gamechanger97, MusicSn, Huh_What_SirD23z</small><em>263</em></div>
+              <div class="contender-row team-power-row"><b>2</b><span>Sutton, Sutton And Sutton LLC</span><small>Freexsmoke91, Califooya, Renny_Waves, Waxymrhb</small><em>149</em></div>
+              <div class="contender-row team-power-row"><b>3</b><span>Team Kentucky</span><small>Okcbest, Chef_Boyaree, Major_Smoove</small><em>27</em></div>
+              <div class="contender-row team-power-row champion-row"><b>4</b><span>Tru Kingz</span><small>BabyboyJacksonJr, M0ney_T510</small><em>26</em></div>
+              <div class="contender-row team-power-row"><b>5</b><span>Los Amigos</span><small>Brass_Monkey_NYC, LonestarTTV</small><em>19</em></div>
+              <div class="contender-row team-power-row"><b>5</b><span>Tha Product</span><small>ZoOo_Oom, BartholomewOMEGA</small><em>19</em></div>
+              <div class="contender-row team-power-row"><b>7</b><span>The Bar</span><small>SeanBz206, CarnageStorm</small><em>-4</em></div>
             </div>
           </article>
         </div>
@@ -420,11 +436,13 @@
           <p class="eyebrow">Championships</p>
           <h2>Every belt has a home.</h2>
         </div>
-        <div class="title-grid">
+        <div id="championship-grid" class="title-grid">
           <article class="title-card title-red">
             <img
-              src="assets/logos/unprovoked-heavyweight-championship.webp"
-              alt="Unprovoked Heavyweight Championship logo"
+              src="assets/champions/i-do-dis-heavyweight.jpeg"
+              alt="I_Do_Dis_314 - Unprovoked Heavyweight Championship"
+              loading="lazy"
+              decoding="async"
             />
             <span>Monday Night Jabs</span>
             <strong>Unprovoked Heavyweight Championship</strong>
@@ -432,35 +450,43 @@
           </article>
           <article class="title-card title-red">
             <img
-              src="assets/logos/unprovoked-chaos-championship.webp"
-              alt="Unprovoked Chaos Championship logo"
+              src="assets/champions/zooo-oom-chaos.jpeg"
+              alt="ZoOo_Oom - Unprovoked Chaos Championship"
+              loading="lazy"
+              decoding="async"
             />
             <span>Monday Night Jabs</span>
-            <strong>Unprovoked Chaos Champion</strong>
+            <strong>Unprovoked Chaos Championship</strong>
             <small>ZoOo_Oom</small>
           </article>
           <article class="title-card title-teal">
             <img
-              src="assets/logos/walk-em-down-championship.webp"
-              alt="Walk-Em Down Championship logo"
+              src="assets/champions/renny-waves-wed.jpeg"
+              alt="Renny_Waves - Walk-Em Down Championship"
+              loading="lazy"
+              decoding="async"
             />
-            <span>Walk-Em Down Wednesday</span>
+            <span>Walk-Em Down Wednesdays</span>
             <strong>Walk-Em Down Championship</strong>
             <small>Renny_Waves</small>
           </article>
           <article class="title-card title-teal">
             <img
-              src="assets/logos/southern-internet-championship.webp"
-              alt="Southern Internet Championship logo"
+              src="assets/champions/xrockstar-southern.jpeg"
+              alt="xRockstar901x - Southern Internet Championship"
+              loading="lazy"
+              decoding="async"
             />
-            <span>Walk-Em Down Wednesday</span>
-            <strong>Southern Internet Champion</strong>
+            <span>Walk-Em Down Wednesdays</span>
+            <strong>Southern Internet Championship</strong>
             <small>xRockstar901x</small>
           </article>
           <article class="title-card title-green">
             <img
-              src="assets/logos/unprovoked-tag-team-championship.webp"
-              alt="Unprovoked Tag-Team Championship logo"
+              src="assets/champions/tru-kingz-tag.jpeg"
+              alt="Tru Kingz - Unprovoked Tag-Team Championship"
+              loading="lazy"
+              decoding="async"
             />
             <span>Friday Night Fades</span>
             <strong>Unprovoked Tag-Team Championship</strong>
