@@ -20,9 +20,9 @@
   const CHAMPIONSHIP_IMAGES = {
     "unprovoked heavyweight championship": "assets/logos/monday-night-jabs.webp",
     "unprovoked chaos championship": "assets/champions/zooo-oom-chaos.jpeg",
-    "walk-em down championship": "assets/champions/renny-waves-wed.jpeg",
+    "walk em down championship": "assets/champions/renny-waves-wed.jpeg",
     "southern internet championship": "assets/champions/xrockstar-southern.jpeg",
-    "unprovoked tag-team championship": "assets/champions/tru-kingz-tag.jpeg"
+    "unprovoked tag team championship": "assets/champions/tru-kingz-tag.jpeg"
   };
 
   const CHAMPIONSHIP_FALLBACKS = [
