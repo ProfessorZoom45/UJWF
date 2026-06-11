@@ -91,18 +91,19 @@
     return Number.isFinite(parsed) ? parsed : fallback;
   }
 
-  function sheetUrl(sheetName) {
+  function sheetUrl(sheetName, range) {
     const cacheBust = Math.floor(Date.now() / CONFIG.refreshBucketMs);
     const encodedSheet = encodeURIComponent(sheetName);
-    return `https://docs.google.com/spreadsheets/d/${CONFIG.spreadsheetId}/gviz/tq?tqx=out:json&sheet=${encodedSheet}&cache=${cacheBust}`;
+    const encodedRange = range ? `&range=${encodeURIComponent(range)}` : "";
+    return `https://docs.google.com/spreadsheets/d/${CONFIG.spreadsheetId}/gviz/tq?tqx=out:json&sheet=${encodedSheet}${encodedRange}&cache=${cacheBust}`;
   }
 
-  async function fetchSheet(sheetName) {
+  async function fetchSheetText(sheetName, range = "") {
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), CONFIG.timeoutMs);
 
     try {
-      const response = await fetch(sheetUrl(sheetName), {
+      const response = await fetch(sheetUrl(sheetName, range), {
         signal: controller.signal,
         cache: "no-store"
       });
@@ -118,22 +119,36 @@
         throw new Error(`Unexpected sheet response: ${sheetName}`);
       }
 
-      const payload = JSON.parse(text.slice(jsonStart + 1, jsonEnd));
-      const labels = payload.table.cols.map((column, index) => clean(column.label || column.id || `Column ${index + 1}`));
-
-      return payload.table.rows
-        .map((row) => {
-          const record = {};
-          labels.forEach((label, index) => {
-            const cell = row.c[index];
-            record[label] = cell ? clean(cell.f ?? cell.v ?? "") : "";
-          });
-          return record;
-        })
-        .filter((row) => Object.values(row).some(Boolean));
+      return JSON.parse(text.slice(jsonStart + 1, jsonEnd));
     } finally {
       window.clearTimeout(timeout);
     }
+  }
+
+  async function fetchSheet(sheetName) {
+    const payload = await fetchSheetText(sheetName);
+    const labels = payload.table.cols.map((column, index) => clean(column.label || column.id || `Column ${index + 1}`));
+
+    return payload.table.rows
+      .map((row) => {
+        const record = {};
+        labels.forEach((label, index) => {
+          const cell = row.c[index];
+          record[label] = cell ? clean(cell.f ?? cell.v ?? "") : "";
+        });
+        return record;
+      })
+      .filter((row) => Object.values(row).some(Boolean));
+  }
+
+  async function fetchSheetGrid(sheetName, range) {
+    const payload = await fetchSheetText(sheetName, range);
+    return payload.table.rows
+      .map((row) => payload.table.cols.map((_, index) => {
+        const cell = row.c[index];
+        return cell ? clean(cell.f ?? cell.v ?? "") : "";
+      }))
+      .filter((row) => row.some(Boolean));
   }
 
   function el(tag, className, text) {
@@ -276,6 +291,20 @@
       .slice(0, 10);
   }
 
+  function showRankRowsFromGrid(rows) {
+    return rows
+      .slice(2)
+      .map((row) => ({
+        rank: row[0] || "",
+        wrestler: row[1] || "",
+        team: row[2] || "Free Agent",
+        score: row[3] || "0",
+        rival: row[4] || ""
+      }))
+      .filter((row) => row.rank && row.wrestler)
+      .slice(0, 10);
+  }
+
   function renderWrestlerBoard(selector, rows) {
     const board = $(`[data-board="${selector}"]`);
     if (!board || !rows.length) return;
@@ -412,10 +441,12 @@
       fetchSheet(CONFIG.sheets.matchDatabase),
       fetchSheet(CONFIG.sheets.mnjRoster),
       fetchSheet(CONFIG.sheets.wedRoster),
-      fetchSheet(CONFIG.sheets.teams)
+      fetchSheet(CONFIG.sheets.teams),
+      fetchSheetGrid(CONFIG.sheets.mnjRoster, "K1:O12"),
+      fetchSheetGrid(CONFIG.sheets.wedRoster, "K1:O12")
     ]);
 
-    const [champions, rankings, matches, mnjRoster, wedRoster, teams] = requests.map((result) =>
+    const [champions, rankings, matches, mnjRoster, wedRoster, teams, mnjShowRanks, wedShowRanks] = requests.map((result) =>
       result.status === "fulfilled" ? result.value : []
     );
 
@@ -424,9 +455,13 @@
       if (mnjRoster.length) renderRoster("mnj", mnjRoster, ["Wrestler", "Name"]);
       if (wedRoster.length) renderRoster("wed", wedRoster, ["Wrestler", "Name"]);
       if (teams.length) renderRoster("fnf", teams, ["Team / Stable Name", "Team Name", "Faction"]);
+      const mnjBoardRows = showRankRowsFromGrid(mnjShowRanks);
+      const wedBoardRows = showRankRowsFromGrid(wedShowRanks);
+      if (mnjBoardRows.length) renderWrestlerBoard("mnj-wrestlers", mnjBoardRows);
+      if (wedBoardRows.length) renderWrestlerBoard("wed-wrestlers", wedBoardRows);
       if (rankings.length) {
-        renderWrestlerBoard("mnj-wrestlers", powerRankRows(rankings, "monday"));
-        renderWrestlerBoard("wed-wrestlers", powerRankRows(rankings, "walk"));
+        if (!mnjBoardRows.length) renderWrestlerBoard("mnj-wrestlers", powerRankRows(rankings, "monday"));
+        if (!wedBoardRows.length) renderWrestlerBoard("wed-wrestlers", powerRankRows(rankings, "walk"));
         renderTeamBoard(rankings);
       }
       if (matches.length) renderRecentResults(matches);
