@@ -111,6 +111,10 @@
   font-weight: 950;
 }
 
+.negative-score {
+  color: #f4cccc;
+}
+
 .champion-row span {
   color: var(--gold);
 }
@@ -143,21 +147,6 @@
   font-weight: 950;
 }
 
-.team-board-list > .contender-row:nth-of-type(8) {
-  display: none;
-}
-
-.title-card img {
-  width: 100%;
-  height: 210px;
-  object-fit: cover;
-  object-position: center;
-  margin-bottom: 14px;
-  border: 1px solid rgba(220, 224, 225, 0.14);
-  border-radius: 6px;
-  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.58));
-}
-
 @media (max-width: 1080px) {
   .board-grid {
     grid-template-columns: 1fr;
@@ -179,7 +168,7 @@
   }
 
   .rank-board-row {
-    grid-template-columns: 32px minmax(0, 1fr) 54px;
+    grid-template-columns: 36px minmax(0, 1fr) 56px;
   }
 
   .rank-board-row small,
@@ -188,11 +177,23 @@
     white-space: normal;
   }
 
+  .rank-board-row span,
+  .rank-board-row small,
+  .rank-board-row i,
+  .team-power-row span,
+  .team-power-row small {
+    overflow-wrap: anywhere;
+  }
+
   .team-power-row {
-    grid-template-columns: 32px minmax(0, 1fr) 54px;
+    grid-template-columns: 36px minmax(0, 1fr) 56px;
   }
 
   .team-power-row small {
     grid-column: 2 / 4;
+  }
+
+  .contender-row {
+    align-items: start;
   }
 }
