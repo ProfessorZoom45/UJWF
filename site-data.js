@@ -293,7 +293,6 @@
 
   function showRankRowsFromGrid(rows, startColumn = 0) {
     return rows
-      .slice(2)
       .map((row) => ({
         rank: row[startColumn] || "",
         wrestler: row[startColumn + 1] || "",
@@ -301,13 +300,12 @@
         score: row[startColumn + 3] || "0",
         rival: row[startColumn + 4] || ""
       }))
-      .filter((row) => row.rank && row.wrestler)
+      .filter((row) => /^\d+$/.test(row.rank) && row.wrestler)
       .slice(0, 10);
   }
 
   function teamRowsFromGrid(rows, startColumn = 12) {
     return rows
-      .slice(2)
       .map((row) => ({
         rank: row[startColumn] || "",
         team: row[startColumn + 1] || "",
@@ -315,7 +313,7 @@
         score: row[startColumn + 3] || "0",
         rival: row[startColumn + 4] || ""
       }))
-      .filter((row) => row.rank && row.team && normalize(row.team) !== "no formal team")
+      .filter((row) => /^\d+$/.test(row.rank) && row.team && normalize(row.team) !== "no formal team")
       .slice(0, 10);
   }
 
