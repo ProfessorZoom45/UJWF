@@ -42,13 +42,13 @@
       title: "Walk-Em Down Championship",
       show: "Walk-Em Down Wednesdays",
       champion: "Renny_Waves",
-      defenses: "0"
+      defenses: "1"
     },
     {
       title: "Southern Internet Championship",
       show: "Walk-Em Down Wednesdays",
       champion: "xRockstar901x",
-      defenses: "0"
+      defenses: "1"
     },
     {
       title: "Unprovoked Tag-Team Championship",
@@ -206,7 +206,7 @@
         .map((row) => get(row, ["Current Champion(s)", "Current Champion", "Champion", "Champion 1"]))
         .filter((value) => value && normalize(value) !== "vacant tbd" && normalize(value) !== "vacant");
       const faction = rowsForTitle
-        .map((row) => get(row, ["Faction", "Team / Stable", "Team", "Current Faction"]))
+        .map((row) => get(row, ["Faction / Stable", "Faction", "Team / Stable", "Team", "Current Faction"]))
         .find(Boolean);
 
       champions.forEach((champion) => state.championNames.add(normalize(champion)));
@@ -304,7 +304,7 @@
       .slice(0, 10);
   }
 
-  function teamRowsFromGrid(rows, startColumn = 12) {
+  function teamRowsFromGrid(rows, startColumn = 0) {
     return rows
       .map((row) => ({
         rank: row[startColumn] || "",
@@ -460,7 +460,7 @@
       fetchSheet(CONFIG.sheets.teams),
       fetchSheetGrid(CONFIG.sheets.mnjRoster, "K1:O12"),
       fetchSheetGrid(CONFIG.sheets.wedRoster, "K1:O12"),
-      fetchSheetGrid(CONFIG.sheets.fnfRoster, "H1:Z40")
+      fetchSheetGrid(CONFIG.sheets.fnfRoster, "T1:X12")
     ]);
 
     const [champions, rankings, matches, mnjRoster, wedRoster, teams, mnjShowRanks, wedShowRanks, fnfBoardGrid] = requests.map((result) =>
@@ -472,11 +472,9 @@
       if (mnjRoster.length) renderRoster("mnj", mnjRoster, ["Wrestler", "Name"]);
       if (wedRoster.length) renderRoster("wed", wedRoster, ["Wrestler", "Name"]);
       if (teams.length) renderRoster("fnf", teams, ["Team / Stable Name", "Team Name", "Faction"]);
-      const mnjFromFNF = showRankRowsFromGrid(fnfBoardGrid, 0);
-      const wedFromFNF = showRankRowsFromGrid(fnfBoardGrid, 6);
-      const teamRows = teamRowsFromGrid(fnfBoardGrid, 12);
-      const mnjBoardRows = mnjFromFNF.length ? mnjFromFNF : showRankRowsFromGrid(mnjShowRanks);
-      const wedBoardRows = wedFromFNF.length ? wedFromFNF : showRankRowsFromGrid(wedShowRanks);
+      const mnjBoardRows = showRankRowsFromGrid(mnjShowRanks);
+      const wedBoardRows = showRankRowsFromGrid(wedShowRanks);
+      const teamRows = teamRowsFromGrid(fnfBoardGrid);
       if (mnjBoardRows.length) renderWrestlerBoard("mnj-wrestlers", mnjBoardRows);
       if (wedBoardRows.length) renderWrestlerBoard("wed-wrestlers", wedBoardRows);
       if (teamRows.length) renderTeamBoardRows(teamRows);
