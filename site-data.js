@@ -3,8 +3,10 @@
 
   const CONFIG = {
     spreadsheetId: "1KDyg_gHPK7vT1PEQq2xkzP1b9XBB7ZCK0IS_b_oLcQM",
+    youtubePlaylistId: "PLa2KnnpQwi4R1iJ7amDjVejvHbw9Szety",
     timeoutMs: 9000,
     refreshBucketMs: 5 * 60 * 1000,
+    videoRefreshMs: 48 * 60 * 60 * 1000,
     sheets: {
       champions: "Championship Tracker",
       rankings: "Power Rankings",
@@ -63,7 +65,6 @@
   };
 
   const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
   function normalize(value) {
     return String(value || "")
@@ -89,6 +90,11 @@
   function numberValue(value, fallback = 0) {
     const parsed = Number(String(value || "").replace(/[^0-9.-]/g, ""));
     return Number.isFinite(parsed) ? parsed : fallback;
+  }
+
+  function matchIdNumber(value) {
+    const match = clean(value).match(/(\d+)(?!.*\d)/);
+    return match ? Number(match[1]) : -1;
   }
 
   function sheetUrl(sheetName, range) {
@@ -264,8 +270,9 @@
   }
 
   function renderRoster(selector, rows, labels) {
-    const list = $(`[data-roster-list="${selector}"]`);
-    if (!list || !rows.length) return;
+    const list = `[data-roster-list="${selector}"]`;
+    const target = $(list);
+    if (!target || !rows.length) return;
     const names = rows
       .map((row) => get(row, labels))
       .filter(Boolean)
@@ -273,7 +280,7 @@
       .sort((a, b) => a.localeCompare(b));
 
     if (!names.length) return;
-    list.replaceChildren(...names.map((name) => el("li", "", name)));
+    target.replaceChildren(...names.map((name) => el("li", "", name)));
   }
 
   function powerRankRows(rows, showNeedle) {
@@ -318,15 +325,16 @@
   }
 
   function renderWrestlerBoard(selector, rows) {
-    const board = $(`[data-board="${selector}"]`);
-    if (!board || !rows.length) return;
+    const board = `[data-board="${selector}"]`;
+    const target = $(board);
+    if (!target || !rows.length) return;
 
     const header = el("div", "board-table-header rank-board-row");
     ["Show Rank", "Wrestler", "Team", "Score", "Rival"].forEach((label, index) => {
       header.append(el(index === 0 ? "b" : index === 3 ? "em" : index === 4 ? "i" : index === 2 ? "small" : "span", "", label));
     });
 
-    board.replaceChildren(header);
+    target.replaceChildren(header);
     rows.forEach((row) => {
       const node = el("div", `contender-row rank-board-row${state.championNames.has(normalize(row.wrestler)) ? " champion-row" : ""}`);
       node.append(el("b", "", row.rank || "-"));
@@ -334,15 +342,13 @@
       node.append(el("small", "", row.team));
       node.append(el("em", Number(row.score) < 0 ? "negative-score" : "", row.score || "0"));
       node.append(el("i", "", row.rival || ""));
-      board.append(node);
+      target.append(node);
     });
   }
 
   function renderTeamBoardRows(teams) {
     const board = $('[data-board="fnf-teams"]');
-    if (!board) return;
-
-    if (!teams.length) return;
+    if (!board || !teams.length) return;
 
     const header = el("div", "board-table-header team-power-row");
     ["Team Rank", "Team", "Wrestlers In Stable", "Score"].forEach((label, index) => {
@@ -390,7 +396,7 @@
         team: get(row, ["Winning Team"])
       }))
       .filter((row) => row.id || row.winner || row.show)
-      .sort((a, b) => numberValue(b.id) - numberValue(a.id))
+      .sort((a, b) => matchIdNumber(b.id) - matchIdNumber(a.id))
       .slice(0, 6);
 
     if (!matches.length) return;
@@ -412,6 +418,41 @@
     if (!status) return;
     status.textContent = message;
     status.classList.toggle("is-error", isError);
+  }
+
+  function setupLatestVideo() {
+    const playlistUrl = `https://www.youtube.com/playlist?list=${CONFIG.youtubePlaylistId}`;
+    const embedBase = `https://www.youtube.com/embed/videoseries?list=${CONFIG.youtubePlaylistId}&autoplay=1&mute=1&playsinline=1&rel=0`;
+    const frame = $(".video-frame iframe");
+    const thumbnail = $(".video-thumb");
+    const subline = $(".video-subline");
+    const copyTitle = $(".video-copy strong");
+    const copyNote = $(".video-copy small");
+    const openVideo = $(".youtube-action");
+    const playlistLink = $(".playlist-action");
+
+    const refreshEmbed = () => {
+      if (!frame) return;
+      const refreshKey = Math.floor(Date.now() / CONFIG.videoRefreshMs);
+      frame.src = `${embedBase}&refresh=${refreshKey}`;
+      frame.title = "Latest videos from the UJWF TV playlist";
+    };
+
+    refreshEmbed();
+    window.setInterval(refreshEmbed, CONFIG.videoRefreshMs);
+
+    if (thumbnail) {
+      thumbnail.src = "assets/logos/ujwf-federation.webp";
+      thumbnail.alt = "UJWF TV playlist";
+    }
+    if (subline) subline.textContent = "Newest upload from the official UJWF TV playlist";
+    if (copyTitle) copyTitle.textContent = "Latest UJWF TV upload";
+    if (copyNote) copyNote.textContent = "Automatically follows the newest video placed first by the playlist owner.";
+    if (openVideo) {
+      openVideo.href = playlistUrl;
+      openVideo.textContent = "Play Latest";
+    }
+    if (playlistLink) playlistLink.href = playlistUrl;
   }
 
   function setupMenu() {
@@ -503,6 +544,7 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     setupMenu();
+    setupLatestVideo();
     loadLiveData();
   });
 })();
