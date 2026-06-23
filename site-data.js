@@ -392,46 +392,79 @@
     return `${names.slice(0, -1).join(", ")} & ${names[names.length - 1]}`;
   }
 
-  function matchDescriptor(match) {
-    return nonBlank([match.show, match.category, match.type, match.variation]).join(" - ");
+  function uniqueParts(values) {
+    const seen = new Set();
+    return nonBlank(values).filter((value) => {
+      const key = normalize(value);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   }
 
-  function resultSentence(match) {
-    const winners = joinNames(match.winners);
-    const participants = joinNames(match.wrestlers);
-    const teams = nonBlank(match.teams);
-    const winningTeam = match.team || "";
-    const fall = match.fall ? ` Fall taken by ${match.fall}.` : "";
-    const notes = match.notes ? ` ${match.notes}` : "";
+  function matchTypeText(match) {
+    const type = uniqueParts([match.category, match.type, match.variation]).join(" ");
+    return type ? `${type} match` : "match";
+  }
 
-    if (match.isDraw) {
-      const field = teams.length ? teams.join(" vs ") : participants;
-      return `${field || "The match"} ended by ${match.victory || "draw / no contest"}.${notes}`;
+  function finishText(value) {
+    const finish = clean(value);
+    if (!finish) return "the final call";
+    if (/^(tko|ko|dq)$/i.test(finish)) return finish.toUpperCase();
+    return finish.toLowerCase();
+  }
+
+  function losingSide(match) {
+    if (match.team && match.teams.length) {
+      return match.teams.filter((team) => normalize(team) !== normalize(match.team)).join(" and ");
     }
 
-    if (winningTeam && teams.length) {
-      const losingTeams = teams.filter((team) => normalize(team) !== normalize(winningTeam));
-      const opponentText = losingTeams.length ? ` over ${losingTeams.join(" and ")}` : "";
-      const winnerText = winners ? ` (${winners})` : "";
-      return `${winningTeam}${winnerText}${opponentText} won by ${match.victory || "recorded result"}.${fall}${notes}`;
+    if (match.winners.length) {
+      return joinNames(match.wrestlers.filter((name) =>
+        !match.winners.some((winner) => normalize(winner) === normalize(name))
+      ));
+    }
+
+    return "";
+  }
+
+  function matchupText(match) {
+    if (match.teams.length) return match.teams.join(" vs ");
+    return joinNames(match.wrestlers);
+  }
+
+  function matchHeadline(match) {
+    if (match.isDraw) return "No winner recorded";
+
+    const winner = match.team || joinNames(match.winners);
+    const loser = losingSide(match);
+    if (winner && loser) return `${winner} def. ${loser}`;
+    return winner || "Result posted";
+  }
+
+  function resultRecap(match) {
+    const show = match.show || "UJWF";
+    const type = matchTypeText(match);
+    const finish = finishText(match.victory);
+    const fall = match.fall ? `, with ${match.fall} taking the fall` : "";
+    const winners = match.team || joinNames(match.winners);
+    const winnerDetail = match.team && match.winners.length ? ` (${joinNames(match.winners)})` : "";
+    const losers = losingSide(match);
+    const matchup = matchupText(match);
+
+    if (match.isDraw) {
+      return `${matchup || "The match"} battled on ${show} in a ${type}. The bout ended by ${finish}, so no winner was recorded.`;
+    }
+
+    if (winners && losers) {
+      return `${winners}${winnerDetail} picked up the win over ${losers} on ${show} in a ${type}. The finish came by ${finish}${fall}.`;
     }
 
     if (winners) {
-      const opponents = match.wrestlers.filter((name) => !match.winners.some((winner) => normalize(winner) === normalize(name)));
-      const opponentText = opponents.length ? ` over ${joinNames(opponents)}` : "";
-      return `${winners}${opponentText} won by ${match.victory || "recorded result"}.${fall}${notes}`;
+      return `${winners}${winnerDetail} picked up the win on ${show} in a ${type}. The finish came by ${finish}${fall}.`;
     }
 
-    return `${participants || "The match"} was recorded as ${match.victory || "complete"}.${notes}`;
-  }
-
-  function matchTags(match) {
-    const tags = [];
-    if (normalize(match.championship) === "yes") tags.push(match.title ? `Title match: ${match.title}` : "Title match");
-    if (normalize(match.titleDefense) === "yes") tags.push("Title defense");
-    if (normalize(match.tournament) === "yes") tags.push(match.tournamentName ? `Tournament: ${match.tournamentName}` : "Tournament match");
-    if (normalize(match.tournamentWinner) === "yes") tags.push("Tournament winner");
-    return tags;
+    return `${matchup || "The match"} hit the card on ${show} in a ${type}. The final call was ${finish}${fall}.`;
   }
 
   function renderRecentResults(rows) {
@@ -495,10 +528,8 @@
     matches.forEach((match) => {
       const card = el("article", "recent-result-card");
       card.append(el("span", "", `${match.id || "Match"}${match.week ? ` / Week ${match.week}` : ""}`));
-      card.append(el("strong", "", matchDescriptor(match) || "Recorded match"));
-      card.append(el("p", "result-summary", resultSentence(match)));
-      const tags = nonBlank([match.count ? `${match.count} participants` : "", ...matchTags(match)]);
-      if (tags.length) card.append(el("small", "result-tags", tags.join(" / ")));
+      card.append(el("strong", "", matchHeadline(match)));
+      card.append(el("p", "result-summary", resultRecap(match)));
       list.append(card);
     });
     target.append(list);
@@ -534,11 +565,11 @@
 
     if (thumbnail) {
       thumbnail.src = "assets/logos/ujwf-federation.webp";
-      thumbnail.alt = "UJWF TV playlist";
+      thumbnail.alt = "UJWF TV";
     }
-    if (subline) subline.textContent = "Newest upload from the official UJWF TV playlist";
-    if (copyTitle) copyTitle.textContent = "Latest UJWF TV upload";
-    if (copyNote) copyNote.textContent = "Automatically follows the newest video placed first by the playlist owner.";
+    if (subline) subline.textContent = "The newest fight night from UJWF TV, pulled straight from the playlist.";
+    if (copyTitle) copyTitle.textContent = "Fresh from UJWF TV";
+    if (copyNote) copyNote.textContent = "When the playlist gets a new top video, this spot rolls forward with it.";
     if (openVideo) {
       openVideo.href = playlistUrl;
       openVideo.textContent = "Play Latest";
@@ -582,7 +613,7 @@
   }
 
   async function loadLiveData() {
-    setStatus("Loading live UJWF sheet data...");
+    setStatus("Checking the live UJWF record book...");
     const requests = await Promise.allSettled([
       fetchSheet(CONFIG.sheets.champions),
       fetchSheet(CONFIG.sheets.rankings),
@@ -621,11 +652,11 @@
       if (successful) {
         setStatus(`Live sheet data refreshed ${new Date().toLocaleString([], { dateStyle: "medium", timeStyle: "short" })}`);
       } else {
-        setStatus("Using fallback site data. Share the Google Sheet publicly to enable live sync.", true);
+        setStatus("Showing saved site data for now. The live sheet needs public access to refresh here.", true);
       }
     } catch (error) {
       console.error("UJWF render error", error);
-      setStatus("Using fallback site data. Live data could not be rendered.", true);
+      setStatus("Showing saved site data for now. The live sheet did not answer in time.", true);
     }
 
     requests
