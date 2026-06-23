@@ -380,6 +380,60 @@
     renderTeamBoardRows(teams);
   }
 
+  function nonBlank(values) {
+    return values.map(clean).filter(Boolean);
+  }
+
+  function joinNames(values) {
+    const names = nonBlank(values);
+    if (!names.length) return "";
+    if (names.length === 1) return names[0];
+    if (names.length === 2) return `${names[0]} & ${names[1]}`;
+    return `${names.slice(0, -1).join(", ")} & ${names[names.length - 1]}`;
+  }
+
+  function matchDescriptor(match) {
+    return nonBlank([match.show, match.category, match.type, match.variation]).join(" - ");
+  }
+
+  function resultSentence(match) {
+    const winners = joinNames(match.winners);
+    const participants = joinNames(match.wrestlers);
+    const teams = nonBlank(match.teams);
+    const winningTeam = match.team || "";
+    const fall = match.fall ? ` Fall taken by ${match.fall}.` : "";
+    const notes = match.notes ? ` ${match.notes}` : "";
+
+    if (match.isDraw) {
+      const field = teams.length ? teams.join(" vs ") : participants;
+      return `${field || "The match"} ended by ${match.victory || "draw / no contest"}.${notes}`;
+    }
+
+    if (winningTeam && teams.length) {
+      const losingTeams = teams.filter((team) => normalize(team) !== normalize(winningTeam));
+      const opponentText = losingTeams.length ? ` over ${losingTeams.join(" and ")}` : "";
+      const winnerText = winners ? ` (${winners})` : "";
+      return `${winningTeam}${winnerText}${opponentText} won by ${match.victory || "recorded result"}.${fall}${notes}`;
+    }
+
+    if (winners) {
+      const opponents = match.wrestlers.filter((name) => !match.winners.some((winner) => normalize(winner) === normalize(name)));
+      const opponentText = opponents.length ? ` over ${joinNames(opponents)}` : "";
+      return `${winners}${opponentText} won by ${match.victory || "recorded result"}.${fall}${notes}`;
+    }
+
+    return `${participants || "The match"} was recorded as ${match.victory || "complete"}.${notes}`;
+  }
+
+  function matchTags(match) {
+    const tags = [];
+    if (normalize(match.championship) === "yes") tags.push(match.title ? `Title match: ${match.title}` : "Title match");
+    if (normalize(match.titleDefense) === "yes") tags.push("Title defense");
+    if (normalize(match.tournament) === "yes") tags.push(match.tournamentName ? `Tournament: ${match.tournamentName}` : "Tournament match");
+    if (normalize(match.tournamentWinner) === "yes") tags.push("Tournament winner");
+    return tags;
+  }
+
   function renderRecentResults(rows) {
     const target = $("#live-recent-results");
     if (!target || !rows.length) return;
@@ -389,24 +443,62 @@
         id: get(row, ["Match ID"]),
         week: get(row, ["Match Week", "Date", "Week"]),
         show: get(row, ["Show"]),
-        type: get(row, ["Match Type", "Match Category"]),
-        winner: get(row, ["Winner", "Winner 1", "Primary Winner / Match Ended By", "Winning Team"]),
+        category: get(row, ["Match Category"]),
+        type: get(row, ["Match Type"]),
+        variation: get(row, ["Match Variation"]),
+        count: get(row, ["Participant Count"]),
+        wrestlers: [
+          get(row, ["Wrestler 1"]),
+          get(row, ["Wrestler 2"]),
+          get(row, ["Wrestler 3"]),
+          get(row, ["Wrestler 4"]),
+          get(row, ["Wrestler 5"]),
+          get(row, ["Wrestler 6"]),
+          get(row, ["Wrestler 7"]),
+          get(row, ["Wrestler 8"])
+        ].filter(Boolean),
+        teams: [
+          get(row, ["Team 1"]),
+          get(row, ["Team 2"]),
+          get(row, ["Team 3"]),
+          get(row, ["Team 4"])
+        ].filter(Boolean),
+        winners: [
+          get(row, ["Primary Winner / Match Ended By", "Winner", "Winner 1"]),
+          get(row, ["Winner 2"]),
+          get(row, ["Winner 3"]),
+          get(row, ["Winner 4"])
+        ].filter(Boolean),
         victory: get(row, ["Victory Condition"]),
-        team: get(row, ["Winning Team"])
+        fall: get(row, ["Fall Taken By"]),
+        team: get(row, ["Winning Team"]),
+        championship: get(row, ["Championship Match"]),
+        title: get(row, ["Title Defended"]),
+        titleDefense: get(row, ["Title Defense?"]),
+        tournament: get(row, ["Tournament Match"]),
+        tournamentName: get(row, ["Tournament Name"]),
+        tournamentWinner: get(row, ["Tournament Winner?"]),
+        notes: get(row, ["Notes"])
       }))
-      .filter((row) => row.id || row.winner || row.show)
+      .filter((row) => row.id || row.winners.length || row.team || row.show)
+      .map((match) => ({
+        ...match,
+        isDraw: /draw|count out|no contest/i.test(match.victory || "") && !match.winners.length && !match.team
+      }))
       .sort((a, b) => matchIdNumber(b.id) - matchIdNumber(a.id))
       .slice(0, 6);
 
     if (!matches.length) return;
     target.replaceChildren();
-    target.append(el("h3", "", "Latest results from the sheet"));
+    target.append(el("h3", "", "Latest results from live events"));
     const list = el("div", "recent-result-list");
     matches.forEach((match) => {
       const card = el("article", "recent-result-card");
       card.append(el("span", "", `${match.id || "Match"}${match.week ? ` / Week ${match.week}` : ""}`));
-      card.append(el("strong", "", match.winner || match.team || "No winner recorded"));
-      card.append(el("small", "", [match.show, match.type, match.victory].filter(Boolean).join(" - ")));
+      card.append(el("strong", "", matchDescriptor(match) || "Recorded match"));
+      card.append(el("p", "result-summary", resultSentence(match)));
+      const tags = nonBlank([match.count ? `${match.count} participants` : "", ...matchTags(match)]);
+      if (tags.length) card.append(el("small", "result-tags", tags.join(" / ")));
       list.append(card);
     });
     target.append(list);
