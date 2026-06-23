@@ -55,7 +55,7 @@
     {
       title: "Unprovoked Tag-Team Championship",
       show: "Friday Night Fades",
-      champion: "The Family",
+      champion: "BabyboyJacksonJr & M0ney_T510",
       defenses: "0"
     }
   ];
@@ -216,13 +216,12 @@
         .find(Boolean);
 
       champions.forEach((champion) => state.championNames.add(normalize(champion)));
-      if (faction) state.championNames.add(normalize(faction));
 
       return {
         title: fallback.title,
         show: get(first, ["Show", "Home Show"]) || fallback.show,
-        champion: faction || champions.join(" & ") || get(first, ["Current Champion(s)", "Current Champion"]) || fallback.champion,
-        members: faction && champions.length ? champions.join(" & ") : "",
+        champion: champions.join(" & ") || get(first, ["Current Champion(s)", "Current Champion"]) || fallback.champion,
+        members: faction && champions.length > 1 ? faction : "",
         defenses: get(first, ["# of Title Defenses", "Title Defenses", "Successful Title Defenses", "Defenses"]) || fallback.defenses
       };
     });
