@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="boards.css" />
     <link rel="stylesheet" href="videos.css" />
+    <link rel="stylesheet" href="callouts.css" />
     <script src="site-data.js" defer></script>
   </head>
   <body>
@@ -37,6 +38,7 @@
         <a href="#recap">Recap</a>
         <a href="#videos">Videos</a>
         <a href="#rosters">Rosters</a>
+        <a href="#callouts">Callouts</a>
         <a href="#boards">Boards</a>
         <a href="#championships">Titles</a>
         <a href="#rankings">Ranking System</a>
@@ -355,6 +357,121 @@
               <p>SNS is the monthly special event card where any roster can get the call: title fights, tournaments, rumbles, and showcase bouts all live here.</p>
             </div>
           </article>
+        </div>
+      </section>
+
+      <section id="callouts" class="section callout-section">
+        <div class="section-heading callout-heading">
+          <p class="eyebrow">Book A Match</p>
+          <h2>Send a UJWF callout.</h2>
+        </div>
+        <div class="callout-layout">
+          <article class="callout-copy">
+            <span>Open challenge desk</span>
+            <p>
+              Pick two to four wrestlers, name the kind of fight you want, and send it straight to the UJWF booking sheet.
+              Approved callouts can become main-card matches, title eliminators, tag fights, or faction business.
+            </p>
+            <p>
+              The form blocks duplicate wrestlers and waits for the Apps Script Web App link before it opens to the public.
+            </p>
+          </article>
+
+          <form id="callout-form" class="callout-form" method="post" target="callout-submit-frame" data-callout-form>
+            <input type="hidden" name="source" value="UJWF Website" />
+            <label>
+              <span>Submitter Name</span>
+              <input name="submitterName" type="text" autocomplete="name" placeholder="Your name or gamertag" />
+            </label>
+            <label>
+              <span># Of Wrestlers</span>
+              <select name="wrestlerCount" required>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </label>
+            <label>
+              <span>Wrestler 1</span>
+              <select name="fighter1" required data-callout-fighter>
+                <option value="">Choose wrestler</option>
+              </select>
+            </label>
+            <label>
+              <span>Wrestler 2</span>
+              <select name="fighter2" required data-callout-fighter>
+                <option value="">Choose wrestler</option>
+              </select>
+            </label>
+            <label>
+              <span>Wrestler 3</span>
+              <select name="fighter3" data-callout-fighter>
+                <option value="">None</option>
+              </select>
+            </label>
+            <label>
+              <span>Wrestler 4</span>
+              <select name="fighter4" data-callout-fighter>
+                <option value="">None</option>
+              </select>
+            </label>
+            <label>
+              <span>Challenge Type</span>
+              <select name="challengeType" required>
+                <option>Open Weight Challenge</option>
+                <option>Grudge Match Request</option>
+                <option>Tag-Team Challenge</option>
+                <option>Faction Challenge</option>
+                <option>Title Opportunity Request</option>
+                <option>Tournament Match Request</option>
+                <option>Special Attraction</option>
+              </select>
+            </label>
+            <label>
+              <span>Match Category</span>
+              <select name="matchCategory" required>
+                <option>Normal</option>
+                <option>Tag</option>
+                <option>Handicap</option>
+                <option>Extreme</option>
+                <option>Special</option>
+              </select>
+            </label>
+            <label>
+              <span>Match Type</span>
+              <select name="matchType" required>
+                <option>Normal</option>
+                <option>Tag Team</option>
+                <option>Extreme Rules</option>
+                <option>Hell In A Cell</option>
+                <option>Steel Cage</option>
+                <option>Table Match</option>
+                <option>Ladder Match</option>
+                <option>Tables, Ladders, And Chairs</option>
+                <option>Submission Match</option>
+                <option>Last Man Standing</option>
+                <option>No Holds Barred</option>
+                <option>Iron Man Match</option>
+                <option>Battle Royal</option>
+                <option>Royal Rumble</option>
+                <option>Gauntlet Match</option>
+                <option>Special Guest Referee</option>
+              </select>
+            </label>
+            <label>
+              <span>Match Variation</span>
+              <input name="matchVariation" type="text" placeholder="One On One, Two On Two, Triple Threat..." />
+            </label>
+            <label class="callout-notes">
+              <span>Notes</span>
+              <textarea name="notes" rows="4" placeholder="Add the reason, stipulation, or story behind the callout."></textarea>
+            </label>
+            <button type="submit" disabled data-callout-submit>Callouts Opening Soon</button>
+            <p class="callout-status" data-callout-status aria-live="polite">
+              Waiting on the Apps Script Web App URL.
+            </p>
+          </form>
+          <iframe class="callout-frame" name="callout-submit-frame" title="UJWF callout submission" hidden></iframe>
         </div>
       </section>
 
