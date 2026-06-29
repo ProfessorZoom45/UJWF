@@ -7,6 +7,7 @@
     timeoutMs: 9000,
     refreshBucketMs: 5 * 60 * 1000,
     videoRefreshMs: 48 * 60 * 60 * 1000,
+    calloutEndpoint: "",
     sheets: {
       champions: "Championship Tracker",
       rankings: "Power Rankings",
@@ -20,7 +21,7 @@
   };
 
   const CHAMPIONSHIP_IMAGES = {
-    "unprovoked heavyweight championship": "assets/logos/monday-night-jabs.webp",
+    "unprovoked heavyweight championship": "assets/champions/i-do-dis-heavyweight.jpeg",
     "unprovoked chaos championship": "assets/champions/zooo-oom-chaos.jpeg",
     "walk em down championship": "assets/champions/renny-waves-wed.jpeg",
     "southern internet championship": "assets/champions/xrockstar-southern.jpeg",
@@ -58,6 +59,39 @@
       champion: "BabyboyJacksonJr & M0ney_T510",
       defenses: "0"
     }
+  ];
+
+  const CALLOUT_ROSTER_FALLBACK = [
+    "B-Wilder",
+    "BabyboyJacksonJr",
+    "BartholomewOMEGA",
+    "Brass_Monkey_NYC",
+    "Califooya",
+    "CarnageStorm",
+    "Chef_Boyaree",
+    "Freexsmoke91",
+    "G2_daJuice24",
+    "Gamechanger97",
+    "Huh_What_SirD23z",
+    "I_amClutch_HXT",
+    "I_Do_Dis_314",
+    "Jonathansb316",
+    "K_D_Smok3",
+    "LonestarTTV",
+    "M0ney_T510",
+    "Major_Smoove",
+    "McBuckets_32",
+    "MusicSn",
+    "Okcbest",
+    "PartyMaster84",
+    "Ramoja3",
+    "Renny_Waves",
+    "Saman747",
+    "SeanBz206",
+    "That951boi",
+    "Waxymrhb",
+    "xRockstar901x",
+    "ZoOo_Oom"
   ];
 
   const state = {
@@ -281,6 +315,99 @@
 
     if (!names.length) return;
     target.replaceChildren(...names.map((name) => el("li", "", name)));
+  }
+
+  function collectCalloutRoster(mnjRoster, wedRoster) {
+    const names = [...mnjRoster, ...wedRoster]
+      .map((row) => get(row, ["Wrestler", "Name"]))
+      .filter(Boolean)
+      .filter((name) => !["vacant", "vacant tbd", "no formal team"].includes(normalize(name)));
+
+    const unique = [...new Set(names)].sort((a, b) => a.localeCompare(b));
+    return unique.length ? unique : CALLOUT_ROSTER_FALLBACK;
+  }
+
+  function populateCalloutFighters(names = CALLOUT_ROSTER_FALLBACK) {
+    const selects = document.querySelectorAll("[data-callout-fighter]");
+    if (!selects.length) return;
+
+    selects.forEach((select) => {
+      const firstLabel = select.required ? "Choose wrestler" : "None";
+      const first = new Option(firstLabel, "");
+      select.replaceChildren(first);
+      names.forEach((name) => select.append(new Option(name, name)));
+    });
+  }
+
+  function setupCalloutForm() {
+    const form = $("[data-callout-form]");
+    if (!form) return;
+
+    const submit = $("[data-callout-submit]", form);
+    const status = $("[data-callout-status]", form);
+    const endpoint = clean(CONFIG.calloutEndpoint);
+
+    if (!endpoint) {
+      form.removeAttribute("action");
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = "Callouts Opening Soon";
+      }
+      if (status) {
+        status.textContent = "Deploy the Apps Script Web App, then paste its URL into CONFIG.calloutEndpoint.";
+        status.classList.remove("is-ready");
+      }
+      return;
+    }
+
+    form.action = endpoint;
+    if (submit) {
+      submit.disabled = false;
+      submit.textContent = "Submit Callout";
+    }
+    if (status) {
+      status.textContent = "Ready to send to the UJWF booking sheet.";
+      status.classList.add("is-ready");
+    }
+
+    form.addEventListener("submit", (event) => {
+      const selected = [...form.querySelectorAll("[data-callout-fighter]")]
+        .map((select) => clean(select.value))
+        .filter(Boolean);
+      const duplicate = selected.find((name, index) => selected.indexOf(name) !== index);
+
+      if (selected.length < 2 || duplicate) {
+        event.preventDefault();
+        if (status) {
+          status.textContent = duplicate
+            ? "Choose different wrestlers for the callout."
+            : "Choose at least two wrestlers before sending the callout.";
+          status.classList.add("is-error");
+        }
+        return;
+      }
+
+      if (status) {
+        status.textContent = "Sending this callout to UJWF booking...";
+        status.classList.remove("is-error");
+      }
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = "Sending...";
+      }
+
+      window.setTimeout(() => {
+        form.reset();
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = "Submit Callout";
+        }
+        if (status) {
+          status.textContent = "Callout sent. Check the UJWF Callouts tab for review.";
+          status.classList.add("is-ready");
+        }
+      }, 1100);
+    });
   }
 
   function powerRankRows(rows, showNeedle) {
@@ -635,6 +762,7 @@
       if (champions.length) renderChampionships(champions);
       if (mnjRoster.length) renderRoster("mnj", mnjRoster, ["Wrestler", "Name"]);
       if (wedRoster.length) renderRoster("wed", wedRoster, ["Wrestler", "Name"]);
+      populateCalloutFighters(collectCalloutRoster(mnjRoster, wedRoster));
       if (teams.length) renderRoster("fnf", teams, ["Team / Stable Name", "Team Name", "Faction"]);
       const mnjBoardRows = showRankRowsFromGrid(mnjShowRanks);
       const wedBoardRows = showRankRowsFromGrid(wedShowRanks);
@@ -668,6 +796,8 @@
   document.addEventListener("DOMContentLoaded", () => {
     setupMenu();
     setupLatestVideo();
+    populateCalloutFighters();
+    setupCalloutForm();
     loadLiveData();
   });
 })();
