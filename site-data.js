@@ -275,6 +275,7 @@
     const names = rows
       .map((row) => get(row, labels))
       .filter(Boolean)
+      .filter((name) => normalize(name) !== "no formal team")
       .filter((name, index, array) => array.indexOf(name) === index)
       .sort((a, b) => a.localeCompare(b));
 
