@@ -1,0 +1,146 @@
+.callout-section {
+  border-top: 1px solid rgba(220, 224, 225, 0.1);
+  background:
+    linear-gradient(135deg, rgba(122, 0, 0, 0.16), transparent 34%),
+    linear-gradient(225deg, rgba(48, 200, 206, 0.12), transparent 36%),
+    #090b0c;
+}
+
+.callout-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(320px, 1.18fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.callout-copy,
+.callout-form {
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 8px;
+  background: rgba(18, 21, 22, 0.88);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.26);
+}
+
+.callout-copy {
+  padding: clamp(18px, 3vw, 28px);
+}
+
+.callout-copy span {
+  display: block;
+  margin-bottom: 12px;
+  color: #d4af37;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.callout-copy p {
+  margin: 0 0 14px;
+  color: #c8ced0;
+  line-height: 1.65;
+}
+
+.callout-copy p:last-child {
+  margin-bottom: 0;
+}
+
+.callout-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: clamp(16px, 3vw, 24px);
+}
+
+.callout-form label {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.callout-form label span {
+  color: #dce0e1;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.callout-form input,
+.callout-form select,
+.callout-form textarea {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid rgba(220, 224, 225, 0.24);
+  border-radius: 6px;
+  background: #080a0b;
+  color: #dce0e1;
+  font: inherit;
+  font-weight: 800;
+  padding: 10px 12px;
+  outline: none;
+}
+
+.callout-form textarea {
+  min-height: 112px;
+  resize: vertical;
+}
+
+.callout-form input:focus,
+.callout-form select:focus,
+.callout-form textarea:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.16);
+}
+
+.callout-notes,
+.callout-form button,
+.callout-status {
+  grid-column: 1 / -1;
+}
+
+.callout-form button {
+  min-height: 52px;
+  border: 1px solid rgba(212, 175, 55, 0.7);
+  border-radius: 6px;
+  background: linear-gradient(135deg, #d4af37, #fff077);
+  color: #0d0d0d;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.callout-form button:disabled {
+  background: #25292a;
+  color: #8a8f91;
+  cursor: not-allowed;
+  border-color: rgba(220, 224, 225, 0.18);
+}
+
+.callout-status {
+  margin: -4px 0 0;
+  color: #aeb6b8;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.callout-status.is-ready {
+  color: #d4af37;
+}
+
+.callout-status.is-error {
+  color: #f4b8b8;
+}
+
+.callout-frame {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .callout-layout,
+  .callout-form {
+    grid-template-columns: 1fr;
+  }
+}
