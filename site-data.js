@@ -32,32 +32,32 @@
     {
       title: "Unprovoked Heavyweight Championship",
       show: "Monday Night Jabs",
-      champion: "B-Wilder",
-      defenses: "0"
+      champion: "I_Do_Dis_314",
+      defenses: "1"
     },
     {
       title: "Unprovoked Chaos Championship",
       show: "Monday Night Jabs",
       champion: "ZoOo_Oom",
-      defenses: "0"
+      defenses: "1"
     },
     {
       title: "Walk-Em Down Championship",
       show: "Walk-Em Down Wednesdays",
       champion: "Renny_Waves",
-      defenses: "1"
+      defenses: "2"
     },
     {
       title: "Southern Internet Championship",
       show: "Walk-Em Down Wednesdays",
       champion: "xRockstar901x",
-      defenses: "1"
+      defenses: "4"
     },
     {
       title: "Unprovoked Tag-Team Championship",
       show: "Friday Night Fades",
       champion: "BabyboyJacksonJr & M0ney_T510",
-      defenses: "0"
+      defenses: "1"
     }
   ];
 
@@ -217,6 +217,10 @@
     return CHAMPIONSHIP_IMAGES[normalize(title)] || "assets/logos/ujwf-federation.webp";
   }
 
+  function championRole(title) {
+    return normalize(title).includes("tag") ? "Champions" : "Champion";
+  }
+
   function normalizeTitle(title) {
     const value = clean(title);
     if (normalize(value) === "unprovoked chaos champion") return "Unprovoked Chaos Championship";
@@ -294,6 +298,7 @@
       card.append(image);
       card.append(el("span", "", item.show));
       card.append(el("strong", "", item.title));
+      card.append(el("small", "champion-role", championRole(item.title)));
       card.append(el("small", "champion-name", item.champion || "Vacant / TBD"));
       if (item.members) card.append(el("small", "champion-members", item.members));
       card.append(el("small", "title-defenses", `${numberValue(item.defenses)} successful defense${numberValue(item.defenses) === 1 ? "" : "s"}`));
