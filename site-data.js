@@ -7,7 +7,7 @@
     timeoutMs: 9000,
     refreshBucketMs: 5 * 60 * 1000,
     videoRefreshMs: 48 * 60 * 60 * 1000,
-    calloutEndpoint: "",
+    calloutEndpoint: "https://script.google.com/macros/s/AKfycbwW_Uh-pkdhJ6xApq9O0yJUaX3M3FlDSA3FBSrAAgtEB3VLnSHNvsvPYYxoq_liw2v5/exec",
     sheets: {
       champions: "Championship Tracker",
       rankings: "Power Rankings",
