@@ -434,7 +434,7 @@ h2 {
   inset: 0;
   content: "";
   opacity: 0.18;
-  background: url("assets/logos/ujwf-federation.webp") right -30px bottom -44px / 260px no-repeat;
+  background: url("assets/logos/ujwf-federation.png") right -30px bottom -44px / 260px no-repeat;
 }
 
 .recap-label,

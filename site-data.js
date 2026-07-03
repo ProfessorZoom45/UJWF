@@ -214,7 +214,7 @@
   }
 
   function getImageForTitle(title) {
-    return CHAMPIONSHIP_IMAGES[normalize(title)] || "assets/logos/ujwf-federation.webp";
+    return CHAMPIONSHIP_IMAGES[normalize(title)] || "assets/logos/ujwf-federation.png";
   }
 
   function championRole(title) {
@@ -697,7 +697,7 @@
     window.setInterval(refreshEmbed, CONFIG.videoRefreshMs);
 
     if (thumbnail) {
-      thumbnail.src = "assets/logos/ujwf-federation.webp";
+      thumbnail.src = "assets/logos/ujwf-federation.png";
       thumbnail.alt = "UJWF TV";
     }
     if (subline) subline.textContent = "The newest fight night from UJWF TV, pulled straight from the playlist.";
