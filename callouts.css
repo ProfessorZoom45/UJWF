@@ -149,29 +149,6 @@
   text-transform: uppercase;
 }
 
-.title-card > small:first-of-type::before,
-.title-card .champion-name::before {
-  content: "Champion";
-  display: block;
-  margin: 6px 0 4px;
-  color: #d4af37;
-  font-size: 0.84rem;
-  font-weight: 950;
-  letter-spacing: 0.09em;
-  line-height: 1.1;
-  text-transform: uppercase;
-}
-
-.title-card.title-green > small:first-of-type::before,
-.title-card.title-green .champion-name::before {
-  content: "Champions";
-}
-
-.title-card .champion-role + small::before,
-.title-card .champion-role + .champion-name::before {
-  content: none;
-}
-
 @media (max-width: 760px) {
   .callout-layout,
   .callout-form {

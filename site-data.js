@@ -51,7 +51,7 @@
       title: "Southern Internet Championship",
       show: "Walk-Em Down Wednesdays",
       champion: "xRockstar901x",
-      defenses: "4"
+      defenses: "5"
     },
     {
       title: "Unprovoked Tag-Team Championship",
