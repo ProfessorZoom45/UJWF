@@ -1,3 +1,6 @@
+Exit code: 0
+Wall time: 0.6 seconds
+Output:
 (() => {
   "use strict";
 
@@ -24,7 +27,7 @@
     "unprovoked heavyweight championship": "assets/champions/i-do-dis-heavyweight.jpeg",
     "unprovoked chaos championship": "assets/champions/zooo-oom-chaos.jpeg",
     "walk em down championship": "assets/champions/renny-waves-wed.jpeg",
-    "southern internet championship": "assets/champions/xrockstar-southern.jpeg",
+    "southern internet championship": "assets/logos/walk-em-down-wednesdays.webp",
     "unprovoked tag team championship": "assets/champions/tru-kingz-tag.jpeg"
   };
 
@@ -50,8 +53,8 @@
     {
       title: "Southern Internet Championship",
       show: "Walk-Em Down Wednesdays",
-      champion: "xRockstar901x",
-      defenses: "5"
+      champion: "B-Wilder",
+      defenses: "0"
     },
     {
       title: "Unprovoked Tag-Team Championship",
@@ -806,3 +809,4 @@
     loadLiveData();
   });
 })();
+
