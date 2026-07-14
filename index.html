@@ -1,7 +1,3 @@
-Exit code: 0
-Wall time: 0.7 seconds
-Total output lines: 1510
-Output:
 <!doctype html>
 <html lang="en">
   <head>
@@ -108,23 +104,23 @@ Output:
       <section id="recap" class="section recap-section">
         <div class="section-heading recap-heading">
           <p class="eyebrow">Current Heat</p>
-          <h2>Week 11 changed the chase and crowned a new champion.</h2>
+          <h2>Week 12 shook the boards and turned Wednesday personal.</h2>
         </div>
         <div class="recap-layout">
           <article class="recap-main">
             <span class="recap-label">Full recap to current</span>
             <p>
-              Monday Night Jabs opened Week 11 with wins for Major_Smoove, ZoOo_Oom, BartholomewOMEGA, SeanBz206, and B-Wilder. Friday Night Fades then put MusicSn in the referee shirt as That951boi pinned Brass_Monkey_NYC.
+              Week 12 opened with McBuckets_32 beating MusicSn, Freexsmoke91 stopping BartholomewOMEGA, and Saman747 taking two wins over Heavyweight champion I_Do_Dis_314. Wednesday followed with wins for xRockstar901x, LonestarTTV, Okcbest, and PartyMaster84.
             </p>
             <p>
-              B-Wilder has taken the Southern Internet Championship from xRockstar901x. I_Do_Dis_314 remains Heavyweight champion, Renny_Waves owns the Walk-Em Down throne, ZoOo_Oom holds the Chaos title, and Nepotism still carries the tag gold.
+              PartyMaster84 beat BabyboyJacksonJr inside Hell in a Cell after guest referee M0ney_T510 turned on BabyboyJacksonJr mid-match. B-Wilder remains Southern Internet champion, while I_Do_Dis_314, Renny_Waves, ZoOo_Oom, and Nepotism still hold the other gold.
             </p>
           </article>
           <aside class="heat-card" aria-label="Momentum names">
             <span>Momentum names</span>
             <div class="heat-list">
               <strong>I_Do_Dis_314</strong>
-              <strong>B-Wilder</strong>
+              <strong>Saman747</strong>
               <strong>Renny_Waves</strong>
               <strong>B-Wilder</strong>
               <strong>That951boi</strong>
@@ -136,18 +132,18 @@ Output:
         <div class="recap-grid" aria-label="Show recap highlights">
           <article class="recap-show recap-mnj">
             <span>MNJ</span>
-            <strong>Major_Smoove and ZoOo_Oom stayed hot in Week 11.</strong>
-            <small>BartholomewOMEGA won by count out, SeanBz206 scored a pin, and B-Wilder closed MNJ with another count-out win.</small>
+            <strong>Saman747 beat the Heavyweight champion twice.</strong>
+            <small>McBuckets_32 and Freexsmoke91 also scored Week 12 wins as the Monday board tightened.</small>
           </article>
           <article class="recap-show recap-wed">
             <span>WED</span>
-            <strong>B-Wilder now owns the Southern Internet Championship.</strong>
-            <small>The Week 11 title change ended xRockstar901x's five-defense reign and reset Wednesday's chase.</small>
+            <strong>PartyMaster84 survived Hell in a Cell and a betrayal.</strong>
+            <small>M0ney_T510 turned on BabyboyJacksonJr while serving as guest referee, helping PartyMaster84 take the pin.</small>
           </article>
           <article class="recap-show recap-fnf">
             <span>FNF</span>
-            <strong>That951boi won under MusicSn's watch.</strong>
-            <small>The Week 11 special-guest-referee bout put another result on the board while Nepotism still controls the tag titles.</small>
+            <strong>Nepotism still controls the tag titles.</strong>
+            <small>Week 11 ended with Tha Product winning the tag bout and I_Do_Dis_314 and B-Wilder collecting key singles victories.</small>
           </article>
           <article class="recap-show recap-sns">
             <span>SNS</span>
@@ -487,537 +483,216 @@ Output:
                 <option>30-Man Royal Rumble</option>
                 <option>4 Entrants</option>
                 <option>5 Entrants</option>
-    …5392 tokens truncated…cant / TBD"));
-      strip.append(tile);
-    });
-  }
-
-  function renderChampionships(rows) {
-    const grid = $("#championship-grid");
-    if (!grid) return;
-
-    const championships = groupChampions(rows);
-    renderChampionStrip(championships);
-    grid.replaceChildren();
-
-    championships.forEach((item) => {
-      const card = el("article", `title-card ${showClass(item.show)}`);
-      const image = el("img");
-      image.src = getImageForTitle(item.title);
-      image.alt = `${item.champion || "Current Champion"} - ${item.title}`;
-      image.loading = "lazy";
-      image.decoding = "async";
-      image.addEventListener("error", () => card.classList.add("image-missing"), { once: true });
-
-      card.append(image);
-      card.append(el("span", "", item.show));
-      card.append(el("strong", "", item.title));
-      card.append(el("small", "champion-role", championRole(item.title)));
-      card.append(el("small", "champion-name", item.champion || "Vacant / TBD"));
-      if (item.members) card.append(el("small", "champion-members", item.members));
-      card.append(el("small", "title-defenses", `${numberValue(item.defenses)} successful defense${numberValue(item.defenses) === 1 ? "" : "s"}`));
-      card.append(el("b", "champion-badge", "Current champion"));
-      grid.append(card);
-    });
-  }
-
-  function renderRoster(selector, rows, labels) {
-    const list = `[data-roster-list="${selector}"]`;
-    const target = $(list);
-    if (!target || !rows.length) return;
-    const names = rows
-      .map((row) => get(row, labels))
-      .filter(Boolean)
-      .filter((name) => normalize(name) !== "no formal team")
-      .filter((name, index, array) => array.indexOf(name) === index)
-      .sort((a, b) => a.localeCompare(b));
-
-    if (!names.length) return;
-    target.replaceChildren(...names.map((name) => el("li", "", name)));
-  }
-
-  function collectCalloutRoster(mnjRoster, wedRoster) {
-    const names = [...mnjRoster, ...wedRoster]
-      .map((row) => get(row, ["Wrestler", "Name"]))
-      .filter(Boolean)
-      .filter((name) => !["vacant", "vacant tbd", "no formal team"].includes(normalize(name)));
-
-    const unique = [...new Set(names)].sort((a, b) => a.localeCompare(b));
-    return unique.length ? unique : CALLOUT_ROSTER_FALLBACK;
-  }
-
-  function populateCalloutFighters(names = CALLOUT_ROSTER_FALLBACK) {
-    const selects = document.querySelectorAll("[data-callout-fighter]");
-    if (!selects.length) return;
-
-    selects.forEach((select) => {
-      const firstLabel = select.required ? "Choose wrestler" : "None";
-      const first = new Option(firstLabel, "");
-      select.replaceChildren(first);
-      names.forEach((name) => select.append(new Option(name, name)));
-    });
-  }
-
-  function setupCalloutForm() {
-    const form = $("[data-callout-form]");
-    if (!form) return;
-
-    const submit = $("[data-callout-submit]", form);
-    const status = $("[data-callout-status]", form);
-    const endpoint = clean(CONFIG.calloutEndpoint);
-
-    if (!endpoint) {
-      form.removeAttribute("action");
-      if (submit) {
-        submit.disabled = true;
-        submit.textContent = "Callouts Opening Soon";
-      }
-      if (status) {
-        status.textContent = "Deploy the Apps Script Web App, then paste its URL into CONFIG.calloutEndpoint.";
-        status.classList.remove("is-ready");
-      }
-      return;
-    }
-
-    form.action = endpoint;
-    if (submit) {
-      submit.disabled = false;
-      submit.textContent = "Submit Callout";
-    }
-    if (status) {
-      status.textContent = "Ready to send to the UJWF booking sheet.";
-      status.classList.add("is-ready");
-    }
-
-    form.addEventListener("submit", (event) => {
-      const selected = [...form.querySelectorAll("[data-callout-fighter]")]
-        .map((select) => clean(select.value))
-        .filter(Boolean);
-      const duplicate = selected.find((name, index) => selected.indexOf(name) !== index);
-
-      if (selected.length < 2 || duplicate) {
-        event.preventDefault();
-        if (status) {
-          status.textContent = duplicate
-            ? "Choose different wrestlers for the callout."
-            : "Choose at least two wrestlers before sending the callout.";
-          status.classList.add("is-error");
-        }
-        return;
-      }
-
-      if (status) {
-        status.textContent = "Sending this callout to UJWF booking...";
-        status.classList.remove("is-error");
-      }
-      if (submit) {
-        submit.disabled = true;
-        submit.textContent = "Sending...";
-      }
-
-      window.setTimeout(() => {
-        form.reset();
-        if (submit) {
-          submit.disabled = false;
-          submit.textContent = "Submit Callout";
-        }
-        if (status) {
-          status.textContent = "Callout sent. Check the UJWF Callouts tab for review.";
-          status.classList.add("is-ready");
-        }
-      }, 1100);
-    });
-  }
-
-  function powerRankRows(rows, showNeedle) {
-    return rows
-      .map((row) => ({
-        rank: get(row, ["Show Rank", "Power Ranking", "Rank", "Power Rank"]),
-        wrestler: get(row, ["Wrestler Name", "Wrestler", "Name"]),
-        team: get(row, ["Team Name", "Team", "Faction", "Team / Stable"]) || "Free Agent",
-        score: get(row, ["Power Score", "Score"]),
-        rival: get(row, ["Rival"]),
-        show: get(row, ["Home Show", "Show", "Brand"])
-      }))
-      .filter((row) => row.wrestler && normalize(row.show).includes(showNeedle))
-      .sort((a, b) => numberValue(a.rank, 999) - numberValue(b.rank, 999) || numberValue(b.score) - numberValue(a.score))
-      .slice(0, 10);
-  }
-
-  function showRankRowsFromGrid(rows, startColumn = 0) {
-    return rows
-      .map((row) => ({
-        rank: row[startColumn] || "",
-        wrestler: row[startColumn + 1] || "",
-        team: row[startColumn + 2] || "Free Agent",
-        score: row[startColumn + 3] || "0",
-        rival: row[startColumn + 4] || ""
-      }))
-      .filter((row) => /^\d+$/.test(row.rank) && row.wrestler)
-      .slice(0, 10);
-  }
-
-  function teamRowsFromGrid(rows, startColumn = 0) {
-    return rows
-      .map((row) => ({
-        rank: row[startColumn] || "",
-        team: row[startColumn + 1] || "",
-        members: row[startColumn + 2] || "",
-        score: row[startColumn + 3] || "0",
-        rival: row[startColumn + 4] || ""
-      }))
-      .filter((row) => /^\d+$/.test(row.rank) && row.team && normalize(row.team) !== "no formal team")
-      .slice(0, 10);
-  }
-
-  function renderWrestlerBoard(selector, rows) {
-    const board = `[data-board="${selector}"]`;
-    const target = $(board);
-    if (!target || !rows.length) return;
-
-    const header = el("div", "board-table-header rank-board-row");
-    ["Show Rank", "Wrestler", "Team", "Score", "Rival"].forEach((label, index) => {
-      header.append(el(index === 0 ? "b" : index === 3 ? "em" : index === 4 ? "i" : index === 2 ? "small" : "span", "", label));
-    });
-
-    target.replaceChildren(header);
-    rows.forEach((row) => {
-      const node = el("div", `contender-row rank-board-row${state.championNames.has(normalize(row.wrestler)) ? " champion-row" : ""}`);
-      node.append(el("b", "", row.rank || "-"));
-      node.append(el("span", "", row.wrestler));
-      node.append(el("small", "", row.team));
-      node.append(el("em", Number(row.score) < 0 ? "negative-score" : "", row.score || "0"));
-      node.append(el("i", "", row.rival || ""));
-      target.append(node);
-    });
-  }
-
-  function renderTeamBoardRows(teams) {
-    const board = $('[data-board="fnf-teams"]');
-    if (!board || !teams.length) return;
-
-    const header = el("div", "board-table-header team-power-row");
-    ["Team Rank", "Team", "Wrestlers In Stable", "Score"].forEach((label, index) => {
-      header.append(el(index === 0 ? "b" : index === 2 ? "small" : index === 3 ? "em" : "span", "", label));
-    });
-
-    board.replaceChildren(header);
-    teams.forEach((row) => {
-      const node = el("div", `contender-row team-power-row${state.championNames.has(normalize(row.team)) ? " champion-row" : ""}`);
-      node.append(el("b", "", row.rank || "-"));
-      node.append(el("span", "", row.team));
-      node.append(el("small", "", row.members || ""));
-      node.append(el("em", Number(row.score) < 0 ? "negative-score" : "", row.score || "0"));
-      board.append(node);
-    });
-  }
-
-  function renderTeamBoard(rows) {
-    const teams = rows
-      .map((row) => ({
-        rank: get(row, ["Show Team Rank", "Team Rank", "Rank"]),
-        team: get(row, ["Team Name", "Team / Stable Name", "Team", "Faction"]),
-        members: get(row, ["Wrestlers In Stable", "Members", "Member 1"]),
-        score: get(row, ["Combined Team Power Score", "Team Power Score", "Power Score", "Score"])
-      }))
-      .filter((row) => row.team && normalize(row.team) !== "no formal team")
-      .sort((a, b) => numberValue(a.rank, 999) - numberValue(b.rank, 999) || numberValue(b.score) - numberValue(a.score))
-      .slice(0, 10);
-
-    renderTeamBoardRows(teams);
-  }
-
-  function nonBlank(values) {
-    return values.map(clean).filter(Boolean);
-  }
-
-  function joinNames(values) {
-    const names = nonBlank(values);
-    if (!names.length) return "";
-    if (names.length === 1) return names[0];
-    if (names.length === 2) return `${names[0]} & ${names[1]}`;
-    return `${names.slice(0, -1).join(", ")} & ${names[names.length - 1]}`;
-  }
-
-  function uniqueParts(values) {
-    const seen = new Set();
-    return nonBlank(values).filter((value) => {
-      const key = normalize(value);
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-  }
-
-  function matchTypeText(match) {
-    const type = uniqueParts([match.category, match.type, match.variation]).join(" ");
-    return type ? `${type} match` : "match";
-  }
-
-  function finishText(value) {
-    const finish = clean(value);
-    if (!finish) return "the final call";
-    if (/^(tko|ko|dq)$/i.test(finish)) return finish.toUpperCase();
-    return finish.toLowerCase();
-  }
-
-  function losingSide(match) {
-    if (match.team && match.teams.length) {
-      return match.teams.filter((team) => normalize(team) !== normalize(match.team)).join(" and ");
-    }
-
-    if (match.winners.length) {
-      return joinNames(match.wrestlers.filter((name) =>
-        !match.winners.some((winner) => normalize(winner) === normalize(name))
-      ));
-    }
-
-    return "";
-  }
-
-  function matchupText(match) {
-    if (match.teams.length) return match.teams.join(" vs ");
-    return joinNames(match.wrestlers);
-  }
-
-  function matchHeadline(match) {
-    if (match.isDraw) return "No winner recorded";
-
-    const winner = match.team || joinNames(match.winners);
-    const loser = losingSide(match);
-    if (winner && loser) return `${winner} def. ${loser}`;
-    return winner || "Result posted";
-  }
-
-  function resultRecap(match) {
-    const show = match.show || "UJWF";
-    const type = matchTypeText(match);
-    const finish = finishText(match.victory);
-    const fall = match.fall ? `, with ${match.fall} taking the fall` : "";
-    const winners = match.team || joinNames(match.winners);
-    const winnerDetail = match.team && match.winners.length ? ` (${joinNames(match.winners)})` : "";
-    const losers = losingSide(match);
-    const matchup = matchupText(match);
-
-    if (match.isDraw) {
-      return `${matchup || "The match"} battled on ${show} in a ${type}. The bout ended by ${finish}, so no winner was recorded.`;
-    }
-
-    if (winners && losers) {
-      return `${winners}${winnerDetail} picked up the win over ${losers} on ${show} in a ${type}. The finish came by ${finish}${fall}.`;
-    }
-
-    if (winners) {
-      return `${winners}${winnerDetail} picked up the win on ${show} in a ${type}. The finish came by ${finish}${fall}.`;
-    }
-
-    return `${matchup || "The match"} hit the card on ${show} in a ${type}. The final call was ${finish}${fall}.`;
-  }
-
-  function renderRecentResults(rows) {
-    const target = $("#live-recent-results");
-    if (!target || !rows.length) return;
-
-    const matches = rows
-      .map((row) => ({
-        id: get(row, ["Match ID"]),
-        week: get(row, ["Match Week", "Date", "Week"]),
-        show: get(row, ["Show"]),
-        category: get(row, ["Match Category"]),
-        type: get(row, ["Match Type"]),
-        variation: get(row, ["Match Variation"]),
-        count: get(row, ["Participant Count"]),
-        wrestlers: [
-          get(row, ["Wrestler 1"]),
-          get(row, ["Wrestler 2"]),
-          get(row, ["Wrestler 3"]),
-          get(row, ["Wrestler 4"]),
-          get(row, ["Wrestler 5"]),
-          get(row, ["Wrestler 6"]),
-          get(row, ["Wrestler 7"]),
-          get(row, ["Wrestler 8"])
-        ].filter(Boolean),
-        teams: [
-          get(row, ["Team 1"]),
-          get(row, ["Team 2"]),
-          get(row, ["Team 3"]),
-          get(row, ["Team 4"])
-        ].filter(Boolean),
-        winners: [
-          get(row, ["Primary Winner / Match Ended By", "Winner", "Winner 1"]),
-          get(row, ["Winner 2"]),
-          get(row, ["Winner 3"]),
-          get(row, ["Winner 4"])
-        ].filter(Boolean),
-        victory: get(row, ["Victory Condition"]),
-        fall: get(row, ["Fall Taken By"]),
-        team: get(row, ["Winning Team"]),
-        championship: get(row, ["Championship Match"]),
-        title: get(row, ["Title Defended"]),
-        titleDefense: get(row, ["Title Defense?"]),
-        tournament: get(row, ["Tournament Match"]),
-        tournamentName: get(row, ["Tournament Name"]),
-        tournamentWinner: get(row, ["Tournament Winner?"]),
-        notes: get(row, ["Notes"])
-      }))
-      .filter((row) => row.id || row.winners.length || row.team || row.show)
-      .map((match) => ({
-        ...match,
-        isDraw: /draw|count out|no contest/i.test(match.victory || "") && !match.winners.length && !match.team
-      }))
-      .sort((a, b) => matchIdNumber(b.id) - matchIdNumber(a.id))
-      .slice(0, 6);
-
-    if (!matches.length) return;
-    target.replaceChildren();
-    target.append(el("h3", "", "Latest results from live events"));
-    const list = el("div", "recent-result-list");
-    matches.forEach((match) => {
-      const card = el("article", "recent-result-card");
-      card.append(el("span", "", `${match.id || "Match"}${match.week ? ` / Week ${match.week}` : ""}`));
-      card.append(el("strong", "", matchHeadline(match)));
-      card.append(el("p", "result-summary", resultRecap(match)));
-      list.append(card);
-    });
-    target.append(list);
-  }
-
-  function setStatus(message, isError = false) {
-    const status = $("#site-updated");
-    if (!status) return;
-    status.textContent = message;
-    status.classList.toggle("is-error", isError);
-  }
-
-  function setupLatestVideo() {
-    const playlistUrl = `https://www.youtube.com/playlist?list=${CONFIG.youtubePlaylistId}`;
-    const embedBase = `https://www.youtube.com/embed/videoseries?list=${CONFIG.youtubePlaylistId}&autoplay=1&mute=1&playsinline=1&rel=0`;
-    const frame = $(".video-frame iframe");
-    const thumbnail = $(".video-thumb");
-    const subline = $(".video-subline");
-    const copyTitle = $(".video-copy strong");
-    const copyNote = $(".video-copy small");
-    const openVideo = $(".youtube-action");
-    const playlistLink = $(".playlist-action");
-
-    const refreshEmbed = () => {
-      if (!frame) return;
-      const refreshKey = Math.floor(Date.now() / CONFIG.videoRefreshMs);
-      frame.src = `${embedBase}&refresh=${refreshKey}`;
-      frame.title = "Latest videos from the UJWF TV playlist";
-    };
-
-    refreshEmbed();
-    window.setInterval(refreshEmbed, CONFIG.videoRefreshMs);
-
-    if (thumbnail) {
-      thumbnail.src = "assets/logos/ujwf-federation.png";
-      thumbnail.alt = "UJWF TV";
-    }
-    if (subline) subline.textContent = "The newest fight night from UJWF TV, pulled straight from the playlist.";
-    if (copyTitle) copyTitle.textContent = "Fresh from UJWF TV";
-    if (copyNote) copyNote.textContent = "When the playlist gets a new top video, this spot rolls forward with it.";
-    if (openVideo) {
-      openVideo.href = playlistUrl;
-      openVideo.textContent = "Play Latest";
-    }
-    if (playlistLink) playlistLink.href = playlistUrl;
-  }
-
-  function setupMenu() {
-    const button = $(".menu-toggle");
-    const nav = $("#primary-nav");
-    if (!button || !nav) return;
-
-    const closeMenu = () => {
-      button.setAttribute("aria-expanded", "false");
-      document.body.classList.remove("menu-open");
-    };
-
-    const openMenu = () => {
-      button.setAttribute("aria-expanded", "true");
-      document.body.classList.add("menu-open");
-    };
-
-    button.addEventListener("click", () => {
-      const isOpen = button.getAttribute("aria-expanded") === "true";
-      isOpen ? closeMenu() : openMenu();
-    });
-
-    nav.addEventListener("click", (event) => {
-      if (event.target.closest("a")) closeMenu();
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeMenu();
-    });
-
-    document.addEventListener("click", (event) => {
-      if (!document.body.classList.contains("menu-open")) return;
-      if (event.target.closest(".site-header")) return;
-      closeMenu();
-    });
-  }
-
-  async function loadLiveData() {
-    setStatus("Checking the live UJWF record book...");
-    const requests = await Promise.allSettled([
-      fetchSheet(CONFIG.sheets.champions),
-      fetchSheet(CONFIG.sheets.rankings),
-      fetchSheet(CONFIG.sheets.matchDatabase),
-      fetchSheet(CONFIG.sheets.mnjRoster),
-      fetchSheet(CONFIG.sheets.wedRoster),
-      fetchSheet(CONFIG.sheets.teams),
-      fetchSheetGrid(CONFIG.sheets.mnjRoster, "K1:O12"),
-      fetchSheetGrid(CONFIG.sheets.wedRoster, "K1:O12"),
-      fetchSheetGrid(CONFIG.sheets.fnfRoster, "T1:X12")
-    ]);
-
-    const [champions, rankings, matches, mnjRoster, wedRoster, teams, mnjShowRanks, wedShowRanks, fnfBoardGrid] = requests.map((result) =>
-      result.status === "fulfilled" ? result.value : []
-    );
-
-    try {
-      if (champions.length) renderChampionships(champions);
-      if (mnjRoster.length) renderRoster("mnj", mnjRoster, ["Wrestler", "Name"]);
-      if (wedRoster.length) renderRoster("wed", wedRoster, ["Wrestler", "Name"]);
-      populateCalloutFighters(collectCalloutRoster(mnjRoster, wedRoster));
-      if (teams.length) renderRoster("fnf", teams, ["Team / Stable Name", "Team Name", "Faction"]);
-      const mnjBoardRows = showRankRowsFromGrid(mnjShowRanks);
-      const wedBoardRows = showRankRowsFromGrid(wedShowRanks);
-      const teamRows = teamRowsFromGrid(fnfBoardGrid);
-      if (mnjBoardRows.length) renderWrestlerBoard("mnj-wrestlers", mnjBoardRows);
-      if (wedBoardRows.length) renderWrestlerBoard("wed-wrestlers", wedBoardRows);
-      if (teamRows.length) renderTeamBoardRows(teamRows);
-      if (rankings.length) {
-        if (!mnjBoardRows.length) renderWrestlerBoard("mnj-wrestlers", powerRankRows(rankings, "monday"));
-        if (!wedBoardRows.length) renderWrestlerBoard("wed-wrestlers", powerRankRows(rankings, "walk"));
-        if (!teamRows.length) renderTeamBoard(rankings);
-      }
-      if (matches.length) renderRecentResults(matches);
-
-      const successful = requests.filter((result) => result.status === "fulfilled").length;
-      if (successful) {
-        setStatus(`Live sheet data refreshed ${new Date().toLocaleString([], { dateStyle: "medium", timeStyle: "short" })}`);
-      } else {
-        setStatus("Showing saved site data for now. The live sheet needs public access to refresh here.", true);
-      }
-    } catch (error) {
-      console.error("UJWF render error", error);
-      setStatus("Showing saved site data for now. The live sheet did not answer in time.", true);
-    }
-
-    requests
-      .filter((result) => result.status === "rejected")
-      .forEach((result) => console.warn("UJWF sheet load warning", result.reason));
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    setupMenu();
-    setupLatestVideo();
-    populateCalloutFighters();
-    setupCalloutForm();
-    loadLiveData();
-  });
-})();
+                <option>6 Entrants</option>
+                <option>8 Entrants</option>
+                <option>10 Entrants</option>
+                <option>20 Entrants</option>
+                <option>30 Entrants</option>
+              </select>
+            </label>
+            <label class="callout-notes">
+              <span>Notes</span>
+              <textarea name="notes" rows="4" placeholder="Add the reason, stipulation, or story behind the callout."></textarea>
+            </label>
+            <button type="submit" disabled data-callout-submit>Callouts Opening Soon</button>
+            <p class="callout-status" data-callout-status aria-live="polite">
+              Waiting on the Apps Script Web App URL.
+            </p>
+          </form>
+          <iframe class="callout-frame" name="callout-submit-frame" title="UJWF callout submission" hidden></iframe>
+        </div>
+      </section>
+
+      <section id="boards" class="section boards-section">
+        <div class="section-heading boards-heading">
+          <p class="eyebrow">Contender boards</p>
+          <h2>Who's next?</h2>
+        </div>
+        <div class="board-grid">
+          <article class="board-card board-mnj">
+            <div class="board-top">
+              <img src="assets/logos/monday-night-jabs.webp" alt="" />
+              <div>
+                <span>Monday Night Jabs</span>
+                <strong>Top 10 Wrestlers</strong>
+              </div>
+            </div>
+            <div class="contender-list rank-board-list" data-board="mnj-wrestlers" aria-label="Monday Night Jabs Top 10 Wrestlers">
+              <div class="board-table-header rank-board-row">
+                <b>Show Rank</b><span>Wrestler</span><small>Team</small><em>Score</em><i>Rival</i>
+              </div>
+              <div class="contender-row rank-board-row champion-row"><b>1</b><span>I_Do_Dis_314</span><small>The Legends</small><em>218</em><i></i></div>
+              <div class="contender-row rank-board-row champion-row"><b>2</b><span>B-Wilder</span><small>Free Agent</small><em>124</em><i></i></div>
+              <div class="contender-row rank-board-row champion-row"><b>3</b><span>ZoOo_Oom</span><small>Tha Product</small><em>89</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>4</b><span>SeanBz206</span><small>The Bar</small><em>45</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>5</b><span>Freexsmoke91</span><small>Sutton, Sutton And Sutton LLC</small><em>30</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>6</b><span>Saman747</span><small>Los Amigos</small><em>21</em><i>Major_Smoove</i></div>
+              <div class="contender-row rank-board-row"><b>7</b><span>Brass_Monkey_NYC</span><small>Los Amigos</small><em>14</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>7</b><span>G2_daJuice24</span><small>Free Agent</small><em>14</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>9</b><span>BartholomewOMEGA</span><small>Tha Product</small><em>10</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>9</b><span>Major_Smoove</span><small>Team Kentucky</small><em>10</em><i>Saman747</i></div>
+            </div>
+          </article>
+          <article class="board-card board-wed">
+            <div class="board-top">
+              <img src="assets/logos/walk-em-down-wednesdays.webp" alt="" />
+              <div>
+                <span>Walk-Em Down Wednesday</span>
+                <strong>Top 10 Wrestlers</strong>
+              </div>
+            </div>
+            <div class="contender-list rank-board-list" data-board="wed-wrestlers" aria-label="Walk-Em Down Wednesday Top 10 Wrestlers">
+              <div class="board-table-header rank-board-row">
+                <b>Show Rank</b><span>Wrestler</span><small>Team</small><em>Score</em><i>Rival</i>
+              </div>
+              <div class="contender-row rank-board-row"><b>1</b><span>xRockstar901x</span><small>Free Agent</small><em>204</em><i></i></div>
+              <div class="contender-row rank-board-row champion-row"><b>2</b><span>Renny_Waves</span><small>Sutton, Sutton And Sutton LLC</small><em>132</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>3</b><span>That951boi</span><small>The Legends</small><em>84</em><i>Califooya</i></div>
+              <div class="contender-row rank-board-row champion-row"><b>4</b><span>BabyboyJacksonJr</span><small>Nepotism</small><em>56</em><i></i></div>
+              <div class="contender-row rank-board-row champion-row"><b>5</b><span>M0ney_T510</span><small>Nepotism</small><em>49</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>6</b><span>Okcbest</span><small>Team Kentucky</small><em>46</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>7</b><span>Califooya</span><small>Sutton, Sutton And Sutton LLC</small><em>44</em><i>That951boi</i></div>
+              <div class="contender-row rank-board-row"><b>8</b><span>PartyMaster84</span><small>Nepotism</small><em>38</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>9</b><span>Huh_What_SirD23z</span><small>The Legends</small><em>25</em><i></i></div>
+              <div class="contender-row rank-board-row"><b>10</b><span>LonestarTTV</span><small>Los Amigos</small><em>24</em><i></i></div>
+            </div>
+          </article>
+          <article class="board-card board-fnf">
+            <div class="board-top">
+              <img src="assets/logos/friday-night-fades.webp" alt="" />
+              <div>
+                <span>Friday Night Fades</span>
+                <strong>Top Teams</strong>
+              </div>
+            </div>
+            <div class="contender-list team-board-list" data-board="fnf-teams" aria-label="Friday Night Fades Top Teams">
+              <div class="board-table-header team-power-row">
+                <b>Team Rank</b><span>Team</span><small>Wrestlers In Stable</small><em>Score</em>
+              </div>
+              <div class="contender-row team-power-row"><b>1</b><span>The Legends</span><small>I_Do_Dis_314, That951boi, Gamechanger97, MusicSn, Huh_What_SirD23z</small><em>328</em></div>
+              <div class="contender-row team-power-row"><b>2</b><span>Sutton, Sutton And Sutton LLC</span><small>Freexsmoke91, Califooya, Renny_Waves, Waxymrhb</small><em>206</em></div>
+              <div class="contender-row team-power-row champion-row"><b>3</b><span>Nepotism</span><small>BabyboyJacksonJr, M0ney_T510, Jonathansb316, PartyMaster84, McBuckets_32</small><em>130</em></div>
+              <div class="contender-row team-power-row"><b>4</b><span>Tha Product</span><small>ZoOo_Oom, BartholomewOMEGA</small><em>99</em></div>
+              <div class="contender-row team-power-row"><b>5</b><span>Los Amigos</span><small>Brass_Monkey_NYC, LonestarTTV, Saman747</small><em>59</em></div>
+              <div class="contender-row team-power-row"><b>6</b><span>Team Kentucky</span><small>Okcbest, Chef_Boyaree, Major_Smoove</small><em>46</em></div>
+              <div class="contender-row team-power-row"><b>7</b><span>The Bar</span><small>SeanBz206, CarnageStorm</small><em>21</em></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="championships" class="section title-section">
+        <div class="section-heading">
+          <p class="eyebrow">Championships</p>
+          <h2>Every belt has a home.</h2>
+        </div>
+        <div id="championship-grid" class="title-grid">
+          <article class="title-card title-red">
+            <img
+              src="assets/champions/i-do-dis-heavyweight.jpeg"
+              alt="I_Do_Dis_314 - Unprovoked Heavyweight Championship"
+              loading="lazy"
+              decoding="async"
+            />
+            <span>Monday Night Jabs</span>
+            <strong>Unprovoked Heavyweight Championship</strong>
+            <small class="champion-role">Champion</small>
+            <small>I_Do_Dis_314</small>
+          </article>
+          <article class="title-card title-red">
+            <img
+              src="assets/champions/zooo-oom-chaos.jpeg"
+              alt="ZoOo_Oom - Unprovoked Chaos Championship"
+              loading="lazy"
+              decoding="async"
+            />
+            <span>Monday Night Jabs</span>
+            <strong>Unprovoked Chaos Championship</strong>
+            <small class="champion-role">Champion</small>
+            <small>ZoOo_Oom</small>
+          </article>
+          <article class="title-card title-teal">
+            <img
+              src="assets/champions/renny-waves-wed.jpeg"
+              alt="Renny_Waves - Walk-Em Down Championship"
+              loading="lazy"
+              decoding="async"
+            />
+            <span>Walk-Em Down Wednesdays</span>
+            <strong>Walk-Em Down Championship</strong>
+            <small class="champion-role">Champion</small>
+            <small>Renny_Waves</small>
+          </article>
+          <article class="title-card title-teal">
+            <img
+              src="assets/champions/xrockstar-southern.jpeg"
+              alt="B-Wilder - Southern Internet Championship"
+              loading="lazy"
+              decoding="async"
+            />
+            <span>Walk-Em Down Wednesdays</span>
+            <strong>Southern Internet Championship</strong>
+            <small class="champion-role">Champion</small>
+            <small>B-Wilder</small>
+          </article>
+          <article class="title-card title-green">
+            <img
+              src="assets/champions/tru-kingz-tag.jpeg"
+              alt="BabyboyJacksonJr and M0ney_T510 - Unprovoked Tag-Team Championship"
+              loading="lazy"
+              decoding="async"
+            />
+            <span>Friday Night Fades</span>
+            <strong>Unprovoked Tag-Team Championship</strong>
+            <small class="champion-role">Champions</small>
+            <small>BabyboyJacksonJr &amp; M0ney_T510</small>
+          </article>
+        </div>
+      </section>
+
+      <section id="rankings" class="section ranking-section">
+        <div class="section-heading">
+          <p class="eyebrow">Power Ranking System</p>
+          <h2>The score behind the ladder.</h2>
+        </div>
+        <div class="ranking-grid" aria-label="Power ranking score weights">
+          <div class="score positive"><span>Matches</span><strong>+1</strong></div>
+          <div class="score positive"><span>Wins</span><strong>+7</strong></div>
+          <div class="score negative"><span>Solo losses</span><strong>-5</strong></div>
+          <div class="score negative"><span>Team losses</span><strong>-3</strong></div>
+          <div class="score positive"><span>Win % over 75</span><strong>+3</strong></div>
+          <div class="score positive"><span>Pinfall wins</span><strong>+2</strong></div>
+          <div class="score positive"><span>Submission / TKO wins</span><strong>+3</strong></div>
+          <div class="score negative"><span>Pinfall losses</span><strong>-2</strong></div>
+          <div class="score negative"><span>Submission / TKO losses</span><strong>-3</strong></div>
+          <div class="score mixed"><span>Streak block</span><strong>+/-3</strong></div>
+          <div class="score positive"><span>Rumble / Gauntlet wins</span><strong>+8</strong></div>
+          <div class="score positive"><span>Eliminations</span><strong>+1</strong></div>
+          <div class="score positive"><span>Title wins / titles held</span><strong>+15</strong></div>
+          <div class="score positive"><span>Successful title defenses</span><strong>+10</strong></div>
+          <div class="score positive"><span>Tournament match wins</span><strong>+4</strong></div>
+          <div class="score positive"><span>Tournament winners</span><strong>+15</strong></div>
+          <div class="score negative"><span>Draws / no contests</span><strong>-1</strong></div>
+          <div class="score neutral"><span>Head-to-head edge</span><strong>Wins Vs</strong></div>
+          <div class="score neutral"><span>Power ranking</span><strong>Output</strong></div>
+        </div>
+      </section>
+
+      <section id="tracker" class="tracker-section">
+        <div>
+          <p class="eyebrow">Live tracker</p>
+          <h2>Open the live record book.</h2>
+        </div>
+        <a
+          class="tracker-link"
+          href="https://docs.google.com/spreadsheets/d/1KDyg_gHPK7vT1PEQq2xkzP1b9XBB7ZCK0IS_b_oLcQM/edit"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open the live sheet
+        </a>
+      </section>
+    </main>
+  </body>
+</html>
 
