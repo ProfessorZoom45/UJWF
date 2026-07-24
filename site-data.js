@@ -21,7 +21,7 @@
   };
 
   const CHAMPIONSHIP_IMAGES = {
-    "unprovoked heavyweight championship": "assets/champions/i-do-dis-heavyweight.jpeg",
+    "unprovoked heavyweight championship": "assets/logos/unprovoked-heavyweight-championship.webp",
     "unprovoked chaos championship": "assets/champions/zooo-oom-chaos.jpeg",
     "walk em down championship": "assets/champions/renny-waves-wed.jpeg",
     "southern internet championship": "assets/logos/walk-em-down-wednesdays.webp",
@@ -32,14 +32,14 @@
     {
       title: "Unprovoked Heavyweight Championship",
       show: "Monday Night Jabs",
-      champion: "I_Do_Dis_314",
-      defenses: "1"
+      champion: "Brass_Monkey_NYC",
+      defenses: "0"
     },
     {
       title: "Unprovoked Chaos Championship",
       show: "Monday Night Jabs",
       champion: "ZoOo_Oom",
-      defenses: "1"
+      defenses: "2"
     },
     {
       title: "Walk-Em Down Championship",
@@ -50,7 +50,7 @@
     {
       title: "Southern Internet Championship",
       show: "Walk-Em Down Wednesdays",
-      champion: "B-Wilder",
+      champion: "xRockstar901x",
       defenses: "0"
     },
     {
@@ -806,4 +806,5 @@
     loadLiveData();
   });
 })();
+
 
