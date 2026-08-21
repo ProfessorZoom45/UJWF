@@ -32,26 +32,26 @@
     {
       title: "Unprovoked Heavyweight Championship",
       show: "Monday Night Jabs",
-      champion: "Brass_Monkey_NYC",
+      champion: "BartholomewOMEGA",
       defenses: "2"
     },
     {
       title: "Unprovoked Chaos Championship",
       show: "Monday Night Jabs",
-      champion: "ZoOo_Oom",
-      defenses: "3"
+      champion: "B-Wilder",
+      defenses: "0"
     },
     {
       title: "Walk-Em Down Championship",
       show: "Walk-Em Down Wednesdays",
-      champion: "Major_Smoove",
+      champion: "That951boi",
       defenses: "0"
     },
     {
       title: "Southern Internet Championship",
       show: "Walk-Em Down Wednesdays",
       champion: "xRockstar901x",
-      defenses: "5"
+      defenses: "6"
     },
     {
       title: "Unprovoked Tag-Team Championship",
@@ -806,5 +806,4 @@
     loadLiveData();
   });
 })();
-
 
