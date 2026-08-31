@@ -33,7 +33,7 @@
       title: "Unprovoked Heavyweight Championship",
       show: "Monday Night Jabs",
       champion: "BartholomewOMEGA",
-      defenses: "2"
+      defenses: "3"
     },
     {
       title: "Unprovoked Chaos Championship",
@@ -44,7 +44,7 @@
     {
       title: "Walk-Em Down Championship",
       show: "Walk-Em Down Wednesdays",
-      champion: "That951boi",
+      champion: "M0ney_T510",
       defenses: "0"
     },
     {
