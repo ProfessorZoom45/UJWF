@@ -39,7 +39,7 @@
       title: "Unprovoked Chaos Championship",
       show: "Monday Night Jabs",
       champion: "B-Wilder",
-      defenses: "0"
+      defenses: "1"
     },
     {
       title: "Walk-Em Down Championship",
@@ -807,4 +807,3 @@
     loadLiveData();
   });
 })();
-
