@@ -32,8 +32,8 @@
     {
       title: "Unprovoked Heavyweight Championship",
       show: "Monday Night Jabs",
-      champion: "BartholomewOMEGA",
-      defenses: "3"
+      champion: "SeanBz206",
+      defenses: "0"
     },
     {
       title: "Unprovoked Chaos Championship",
@@ -807,3 +807,4 @@
     loadLiveData();
   });
 })();
+
