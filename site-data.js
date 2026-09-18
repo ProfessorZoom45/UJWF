@@ -33,7 +33,7 @@
       title: "Unprovoked Heavyweight Championship",
       show: "Monday Night Jabs",
       champion: "SeanBz206",
-      defenses: "0"
+      defenses: "4"
     },
     {
       title: "Unprovoked Chaos Championship",
