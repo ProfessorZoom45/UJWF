@@ -32,14 +32,14 @@
     {
       title: "Unprovoked Heavyweight Championship",
       show: "Monday Night Jabs",
-      champion: "SeanBz206",
-      defenses: "4"
+      champion: "Jonathansb316",
+      defenses: "0"
     },
     {
       title: "Unprovoked Chaos Championship",
       show: "Monday Night Jabs",
-      champion: "B-Wilder",
-      defenses: "1"
+      champion: "DopeBoyJusto",
+      defenses: "0"
     },
     {
       title: "Walk-Em Down Championship",
@@ -56,7 +56,7 @@
     {
       title: "Unprovoked Tag-Team Championship",
       show: "Friday Night Fades",
-      champion: "Major_Smoove & That951boi",
+      champion: "Major_Smoove & Okcbest",
       defenses: "1"
     }
   ];
