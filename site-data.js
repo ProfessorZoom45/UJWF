@@ -45,7 +45,7 @@
       title: "Walk-Em Down Championship",
       show: "Walk-Em Down Wednesdays",
       champion: "M0ney_T510",
-      defenses: "0"
+      defenses: "1"
     },
     {
       title: "Southern Internet Championship",
