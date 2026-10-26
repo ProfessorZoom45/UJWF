@@ -39,7 +39,7 @@
       title: "Unprovoked Chaos Championship",
       show: "Monday Night Jabs",
       champion: "DopeBoyJusto",
-      defenses: "0"
+      defenses: "1"
     },
     {
       title: "Walk-Em Down Championship",
@@ -50,14 +50,14 @@
     {
       title: "Southern Internet Championship",
       show: "Walk-Em Down Wednesdays",
-      champion: "xRockstar901x",
-      defenses: "6"
+      champion: "BabyboyJacksonJr",
+      defenses: "0"
     },
     {
       title: "Unprovoked Tag-Team Championship",
       show: "Friday Night Fades",
       champion: "Major_Smoove & Okcbest",
-      defenses: "1"
+      defenses: "2"
     }
   ];
 
