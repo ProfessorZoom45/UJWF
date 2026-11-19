@@ -24,7 +24,7 @@
     "unprovoked heavyweight championship": "assets/logos/unprovoked-heavyweight-championship.webp",
     "unprovoked chaos championship": "assets/champions/zooo-oom-chaos.jpeg",
     "walk em down championship": "assets/champions/renny-waves-wed.jpeg",
-    "southern internet championship": "assets/logos/walk-em-down-wednesdays.webp",
+    "southern internet championship": "assets/champions/xrockstar-southern.jpeg",
     "unprovoked tag team championship": "assets/champions/tru-kingz-tag.jpeg"
   };
 
@@ -39,7 +39,7 @@
       title: "Unprovoked Chaos Championship",
       show: "Monday Night Jabs",
       champion: "DopeBoyJusto",
-      defenses: "1"
+      defenses: "2"
     },
     {
       title: "Walk-Em Down Championship",
@@ -50,14 +50,14 @@
     {
       title: "Southern Internet Championship",
       show: "Walk-Em Down Wednesdays",
-      champion: "BabyboyJacksonJr",
+      champion: "xRockstar901x",
       defenses: "0"
     },
     {
       title: "Unprovoked Tag-Team Championship",
       show: "Friday Night Fades",
       champion: "Major_Smoove & Okcbest",
-      defenses: "2"
+      defenses: "3"
     }
   ];
 
